@@ -1,0 +1,187 @@
+\documentclass[12pt, twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{amsthm}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{euscript}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{comment}
+\usepackage{rotating}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}[section]
+
+\numberwithin{equation}{section}
+
+\newcommand*{\No}{No.}
+
+\usepackage{autonum}
+
+\begin{document}
+
+\title{\bf Privilege Learning \thanks{Работа выполнена при поддержке РФФИ и правительства РФ.}}
+\date{}
+\author{}
+\maketitle
+
+\begin{center}
+\bf
+И.\,О.~Фамилия\footnote{афиляция автора}, И.\,О.~Фамилия\footnote{афиляция автора}
+
+\end{center}
+
+{\centering\begin{quote}
+\textbf{Аннотация:} 
+\smallskip
+\textbf{Ключевые слова}: смесь экспертов; байесовский выбор модели; априорное распределение.
+
+\smallskip
+\textbf{DOI}: 00.00000/00000000000000
+\end{quote}
+}
+
+\section{Введение}
+\section{Постановка задачи}
+Пусть задана выборка:
+\[
+\label{eq:st:1}
+\begin{aligned}
+\textbf{X} \in \mathbb{R}^{N\times n}, \quad \textbf{y} \in \mathbb{R}^{N}
+\end{aligned}
+\]
+где~$N$~--- число объектов, $n$~--- число признаков.
+Пусть для некоторых объектов задана привилегированная информация:
+\[
+\label{eq:st:2}
+\begin{aligned}
+\textbf{X}^* \in \mathbb{R}^{N'\times n'}
+\end{aligned}
+\]
+где~$N'\ll N$~--- число объектов с привилегированной информацией, $n'$~--- число привилигированных признаков.
+
+Множество индексов объектов для которых известна привилегированная информация обозначим~$\mathcal{I}$:
+\[
+\label{eq:st:3}
+\begin{aligned}
+\mathcal{I} = \{1 \leq i \leq N |~\text{для $i$-го объекта задана привилегированная информация}\}.
+\end{aligned}
+\]
+
+Пусть на множестве привилегированных признаков задана некоторая модель модель~$\textbf{f}\bigr(\textbf{x}^*\bigr)$:
+\[
+\label{eq:st:4}
+\begin{aligned}
+\textbf{f}:\mathbb{R}^{n'} \to \mathbb{R},
+\end{aligned}
+\]
+причем~$\textbf{f}\bigr(\textbf{x}_i\bigr)$ приближает~$y_i$ наилучшим образом~$\forall i \in \mathcal{I}$. Обозначим ответы модели~$\textbf{f}\bigr(\textbf{x}_i\bigr)=s_i$.  Получим вектор ответом~$\textbf{s}$ модели учителя~$\textbf{f}$.
+
+Требуется построить модель~$\textbf{g}\bigr(\textbf{w}, \textbf{x}\bigr)$ над множеством исходных признаков:
+\[
+\label{eq:st:5}
+\begin{aligned}
+\textbf{g}:\mathbb{R}^{n}\times\mathbb{R}^{n} \to \mathbb{R}.
+\end{aligned}
+\]
+В данной работе в качестве~$\textbf{g}$ рассматривается линейная модель:
+\[
+\label{eq:st:6}
+\begin{aligned}
+\textbf{g}\bigr(\textbf{w}, \textbf{x}) = \textbf{w}^{\mathsf{T}}\textbf{x}.
+\end{aligned}
+\]
+\subsection{Без привилегированной информации}
+Для поиска~$\hat{\textbf{w}}$ воспользуемся методом максимального правдоподобия:
+\[
+\label{eq:st:6}
+\begin{aligned}
+p\bigr(\textbf{y}|\textbf{X}, \textbf{w}\bigr) = \prod_{i=1}^{N}p\bigr(y_{i}|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr).
+\end{aligned}
+\]
+В качестве~$\hat{\textbf{w}}$ выберем то, которое максимизирует правдоподобие модели~\eqref{eq:st:6}:
+\[
+\label{eq:st:7}
+\begin{aligned}
+\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\prod_{i=1}^{N}p\bigr(y_{i}|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr).
+\end{aligned}
+\]
+\subsection{С учетом привилегированной информации}
+Пусть задан некоторый уровень доверия~$\bm{\lambda}\in[0,1]$ к ответам модели~$\textbf{f}$. Рассмотрим совместное правдоподобие правдоподобие:
+\[
+\label{eq:st:8}
+\begin{aligned}
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i, s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+\end{aligned}
+\]
+Расписав~$p\bigr(y_i, s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)$, получаем:
+\[
+\label{eq:st:9}
+\begin{aligned}
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|s_i, \textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+\end{aligned}
+\]
+Пусть~$y_i$ и~$s_i$ независимы, тогда получаем совместное правдоподобие:
+\[
+\label{eq:st:10}
+\begin{aligned}
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+\end{aligned}
+\]
+Используя~\eqref{eq:st:10} получаем следующую оптимизационную задачу для поиска~$\hat{\textbf{w}}$
+\[
+\label{eq:st:11}
+\begin{aligned}
+\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+\end{aligned}
+\]
+\subsection{Случай линейной регрессии}
+Рассмотрим следующие распределения:
+\[
+\label{eq:st:12}
+\begin{aligned}
+p\bigr(y_i|\textbf{x}_i, \textbf{w}\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \bm{\Sigma}\bigr), \\
+p\bigr(y_i|\textbf{x}_i, \textbf{w}, \lambda\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \frac{1}{\lambda}\bm{\Sigma}\bigr), \\
+p\bigr(s_i|\textbf{x}_i, \textbf{w}, \lambda\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x},  \frac{1}{1-\lambda}\bm{\Sigma}\bigr), \\
+\end{aligned}
+\]
+где~$\bm{\Sigma} = \textbf{I}$.
+Подставляя~\eqref{eq:st:12} в~\eqref{eq:st:11} и прологарифмировав, получим:
+\[
+\label{eq:st:11}
+\begin{aligned}
+\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\sum_{i\not\in \mathcal{I}}\left(y_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}+\lambda\sum_{i\in \mathcal{I}}\left(y_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}+\left(1-\lambda\right)\sum_{i\in \mathcal{I}}\left(s_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}.
+\end{aligned}
+\]
+
+
+\begin{thebibliography}{99}
+\bibitem{Vapnik2015}
+	\textit{Vladimir Vapnik, Rauf Izmailov} Learning Using Privileged Information: Similarity Control and Knowledge Transfer // Journal of Machine Learning Research. 2015. No 16. pp. 2023--2049.
+\bibitem{Lopez2016}
+	\textit{David Lopez-Paz, Leon Bottou, Bernhard Scholkopf, Vladimir Vapnik} UNIFYING DISTILLATION
+AND PRIVILEGED INFORMATION // Published as a conference paper at ICLR. 2016.
+ \end{thebibliography}
+
+
+\end{document}
+
