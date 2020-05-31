@@ -46,7 +46,7 @@
 
 \begin{center}
 \bf
-И.\,О.~Фамилия\footnote{афиляция автора}, И.\,О.~Фамилия\footnote{афиляция автора}
+А.\,В.~Грабовой\footnote{афиляция автора}, В.\,В.~Стрижов\footnote{афиляция автора}
 
 \end{center}
 
@@ -62,22 +62,30 @@
 
 \section{Введение}
 \section{Постановка задачи}
-Пусть задана выборка:
+Пусть задано множество объектов~$\bm{\Omega}$ и пространство целевых переменных~$\mathbb{Y}$:
 \[
 \label{eq:st:1}
 \begin{aligned}
-\textbf{X} \in \mathbb{R}^{N\times n}, \quad \textbf{y} \in \mathbb{R}^{N}
+\bm{\Omega}, \quad \left|\bm{\Omega}\right| = N,
 \end{aligned}
 \]
-где~$N$~--- число объектов, $n$~--- число признаков.
-Пусть для некоторых объектов задана привилегированная информация:
+где~$N$~--- число объектов, множество~$\mathbb{Y}=\{1,\cdots,K\}$ для задачи классификации, где~$K$ число классов, множество $\mathbb{Y}=\mathbb{R}$ для задачи регрессии.
+Для множества~$\bm{\Omega}$ задано отображение в некоторое признаковое пространство~$\mathbb{R}^{n}$:
 \[
-\label{eq:st:2}
+\label{eq:st:phi}
 \begin{aligned}
-\textbf{X}^* \in \mathbb{R}^{N'\times n'}
+\varphi:\bm{\Omega} \to \mathbb{R}^{n},
 \end{aligned}
 \]
-где~$N'\ll N$~--- число объектов с привилегированной информацией, $n'$~--- число привилигированных признаков.
+где~$n$ размерность признакового пространства. Обозначим~$\varphi(\bm{\Omega}) = \textbf{X}$.
+Пусть для некоторых объектов~$\bm{\Omega}^* \subset \bm{\Omega}$ задана привилегированная информация:
+\[
+\label{eq:st:phi*}
+\begin{aligned}
+\varphi^*:\bm{\Omega}^* \to \mathbb{R}^{n^*}, \quad \left|\bm{\Omega}^*\right| = N^*,
+\end{aligned}
+\]
+где~$N^* \leq N$~--- число объектов с привилегированной информацией, $n^*$~--- число признаков в пространстве привилегированной информации. Обозначим~$\varphi^*(\bm{\Omega}^*) = \textbf{X}^*$.
 
 Множество индексов объектов для которых известна привилегированная информация обозначим~$\mathcal{I}$:
 \[
@@ -87,89 +95,95 @@
 \end{aligned}
 \]
 
-Пусть на множестве привилегированных признаков задана некоторая модель модель~$\textbf{f}\bigr(\textbf{x}^*\bigr)$:
+Пусть на множестве привилегированных признаков задана некоторая функция (или эксперт)~$\textbf{f}\bigr(\textbf{x}^*\bigr)$:
 \[
 \label{eq:st:4}
 \begin{aligned}
-\textbf{f}:\mathbb{R}^{n'} \to \mathbb{R},
+\textbf{f}:\mathbb{R}^{n^*} \to \mathbb{Y}^*,
 \end{aligned}
 \]
-причем~$\textbf{f}\bigr(\textbf{x}_i\bigr)$ приближает~$y_i$ наилучшим образом~$\forall i \in \mathcal{I}$. Обозначим ответы модели~$\textbf{f}\bigr(\textbf{x}_i\bigr)=s_i$.  Получим вектор ответом~$\textbf{s}$ модели учителя~$\textbf{f}$.
+где~$\mathbb{Y}^*=\mathbb{Y}$ для задачи регрессии и $\mathbb{Y}^*$ является единичным симплексом в пространстве размерности~$K$ (содержит вектора вероятностей каждого класса). Обозначим ответы модели~$\textbf{f}\bigr(\textbf{x}_i\bigr)=s_i$.  Получим вектор ответом~$\textbf{s}$ модели учителя~$\textbf{f}$.
 
-Требуется построить модель~$\textbf{g}\bigr(\textbf{w}, \textbf{x}\bigr)$ над множеством исходных признаков:
+Требуется построить модель~$\textbf{g}\bigr(\textbf{x}\bigr)$ над множеством исходных признаков:
 \[
 \label{eq:st:5}
 \begin{aligned}
-\textbf{g}:\mathbb{R}^{n}\times\mathbb{R}^{n} \to \mathbb{R}.
-\end{aligned}
-\]
-В данной работе в качестве~$\textbf{g}$ рассматривается линейная модель:
-\[
-\label{eq:st:6}
-\begin{aligned}
-\textbf{g}\bigr(\textbf{w}, \textbf{x}) = \textbf{w}^{\mathsf{T}}\textbf{x}.
+\textbf{g}:\mathbb{R}^{n} \to \mathbb{Y}.
 \end{aligned}
 \]
 \subsection{Без привилегированной информации}
-Для поиска~$\hat{\textbf{w}}$ воспользуемся методом максимального правдоподобия:
+Пусть~$\textbf{g}$ выбирается из некоторого семейства:
+\[
+\label{eq:st:G}
+\begin{aligned}
+\mathcal{G} = \left\{\textbf{g}| \textbf{g}:\mathbb{R}^{n} \to \mathbb{Y}.\right\}
+\end{aligned}
+\]
+Для поиска~$\hat{\textbf{g}}$ воспользуемся методом максимального правдоподобия:
 \[
 \label{eq:st:6}
 \begin{aligned}
-p\bigr(\textbf{y}|\textbf{X}, \textbf{w}\bigr) = \prod_{i=1}^{N}p\bigr(y_{i}|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr).
+p\bigr(\textbf{y}|\textbf{X}, \textbf{g}\bigr) = \prod_{i=1}^{N}p\bigr(y_{i}|\textbf{x}_i, \textbf{g}\bigr).
 \end{aligned}
 \]
-В качестве~$\hat{\textbf{w}}$ выберем то, которое максимизирует правдоподобие модели~\eqref{eq:st:6}:
+В качестве~$\hat{\textbf{g}}$ выберем то, которое максимизирует правдоподобие модели~\eqref{eq:st:6}:
 \[
 \label{eq:st:7}
 \begin{aligned}
-\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\prod_{i=1}^{N}p\bigr(y_{i}|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr).
+\hat{\textbf{g}} = \arg\max_{\textbf{g}\in \mathcal{G}} \prod_{i=1}^{N}p\bigr(y_{i}|\textbf{x}_i, \textbf{g}\bigr).
 \end{aligned}
 \]
 \subsection{С учетом привилегированной информации}
-Пусть задан некоторый уровень доверия~$\bm{\lambda}\in[0,1]$ к ответам модели~$\textbf{f}$. Рассмотрим совместное правдоподобие правдоподобие:
+Рассмотрим следующую вероятностную постановку, в которой должны быть выполнены следующие ограничения:
+\begin{enumerate}
+	\item $\forall \omega \in \bm{\Omega}^*$ элементы $y(\omega)$ и $s(\omega)$ являются зависимыми величинами,
+	\item Если $|\bm{\Omega}^*|=0$ то решение должно соответствовать решению~\eqref{eq:st:7}
+	\item Рассмотрим параметр~$\lambda\in[0,1]$ как уровень доверия к ответам модели~$\mathbf{f}$. Будем рассматривать его как вероятность того, что на этапе обучения модель~$\mathbf{g}$ выбирает ответ модели~$\mathbf{f}$ как более верный чем метка~$y$.
+\end{enumerate}
+
+Рассмотрим совместное правдоподобие:
 \[
 \label{eq:st:8}
 \begin{aligned}
-p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i, s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i, s_i|\textbf{X}, \textbf{g}, \lambda\bigr).
 \end{aligned}
 \]
-Расписав~$p\bigr(y_i, s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)$, получаем:
+Расписав~$p\bigr(y_i, s_i|\textbf{X}, \textbf{g}, \lambda\bigr)$, получаем:
 \[
 \label{eq:st:9}
 \begin{aligned}
-p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|s_i, \textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{1-\lambda}\bigr(y_i|s_i, \textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{\lambda}\bigr(s_i|\textbf{X}, \textbf{g}\bigr).
 \end{aligned}
 \]
 Пусть~$y_i$ и~$s_i$ независимы, тогда получаем совместное правдоподобие:
 \[
 \label{eq:st:10}
 \begin{aligned}
-p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{w}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+p\bigr(\textbf{y}, \textbf{s}|\textbf{X}, \textbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{1-\lambda}\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{\lambda}\bigr(s_i|\textbf{X}, \textbf{g}\bigr).
 \end{aligned}
 \]
-Используя~\eqref{eq:st:10} получаем следующую оптимизационную задачу для поиска~$\hat{\textbf{w}}$
+Используя~\eqref{eq:st:10} получаем следующую оптимизационную задачу для поиска~$\hat{\textbf{g}}$
 \[
 \label{eq:st:11}
 \begin{aligned}
-\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr)\prod_{i\in \mathcal{I}}p\bigr(s_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \lambda\bigr).
+\hat{\textbf{g}} = \arg\max_{\textbf{g}\in \mathcal{G}} \prod_{i\not\in \mathcal{I}}p\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{1-\lambda}\bigr(y_i|\textbf{X}, \textbf{g}\bigr)\prod_{i\in \mathcal{I}}p^{\lambda}\bigr(s_i|\textbf{X}, \textbf{g}\bigr).
 \end{aligned}
 \]
-\subsection{Случай линейной регрессии}
+\subsection{Случай регрессии}
 Рассмотрим следующие распределения:
 \[
 \label{eq:st:12}
 \begin{aligned}
-p\bigr(y_i|\textbf{x}_i, \textbf{w}\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \bm{\Sigma}\bigr), \\
-p\bigr(y_i|\textbf{x}_i, \textbf{w}, \lambda\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x}, \frac{1}{\lambda}\bm{\Sigma}\bigr), \\
-p\bigr(s_i|\textbf{x}_i, \textbf{w}, \lambda\bigr) &= N\bigr(\textbf{y}_i|\textbf{w}^{\mathsf{T}}\textbf{x},  \frac{1}{1-\lambda}\bm{\Sigma}\bigr), \\
+p\bigr(y_i|\textbf{x}_i, \textbf{g}\bigr) &= N\bigr(y_i|\textbf{g}(\textbf{x}), \bm{\Sigma}\bigr), \\
+p\bigr(s_i|\textbf{x}_i, \textbf{g}\bigr) &= N\bigr(s_i|\textbf{g}(\textbf{x}),  \bm{\Sigma}\bigr), \\
 \end{aligned}
 \]
 где~$\bm{\Sigma} = \textbf{I}$.
 Подставляя~\eqref{eq:st:12} в~\eqref{eq:st:11} и прологарифмировав, получим:
 \[
-\label{eq:st:11}
+\label{eq:st:13}
 \begin{aligned}
-\hat{\textbf{w}} = \arg\max_{\textbf{w}\in \mathbb{R}^{n}}\sum_{i\not\in \mathcal{I}}\left(y_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}+\lambda\sum_{i\in \mathcal{I}}\left(y_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}+\left(1-\lambda\right)\sum_{i\in \mathcal{I}}\left(s_i-\textbf{w}^{\mathsf{T}}\textbf{x}\right)^{2}.
+\hat{\textbf{g}} = \arg\min_{\textbf{g}\in \mathcal{G}}\sum_{i\not\in \mathcal{I}}\left(y_i-\textbf{g}(\textbf{x})\right)^{2}+\left(1-\lambda\right)\sum_{i\in \mathcal{I}}\left(y_i-\textbf{g}(\textbf{x})\right)^{2}+\lambda\sum_{i\in \mathcal{I}}\left(s_i-\textbf{g}(\textbf{x})\right)^{2}.
 \end{aligned}
 \]
 
