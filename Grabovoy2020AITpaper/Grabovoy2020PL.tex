@@ -1,70 +1,40 @@
-\documentclass[12pt, twoside]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Sample document for preparing papers to  "Avtomatika i Telemekhanika"
+%%  charset=utf-8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{amsthm}
-\usepackage{a4wide}
+\documentclass[12pt]{a&t}
 \usepackage{graphicx}
-\usepackage{caption}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{mathrsfs}
-\usepackage{euscript}
-\usepackage{graphicx}
-\usepackage{subfig}
-\usepackage{caption}
-\usepackage{color}
 \usepackage{bm}
-\usepackage{tabularx}
-\usepackage{url}
-\usepackage{adjustbox}
-
-
-\usepackage[toc,page]{appendix}
-
-\usepackage{comment}
-\usepackage{rotating}
 \usepackage{multirow}
 
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
+\begin{document}  %%%!!!
 
-\newtheorem{theorem}{Теорема}
-\newtheorem{lemma}[theorem]{Лемма}
-\newtheorem{definition}{Определение}[section]
+\year{2020}
+\title{Анализ моделей привилегированного обучения и дистиляции}%
+\thanks{Работа выполнена при поддержке \dots
+(грант \mbox{№\,\dots}).}
 
-\newcommand*{\No}{No.}
+\authors{А.В.~ГРАБОВОЙ\\
+В.В.~СТРИЖОВ, д-р~физ-мат.~наук\\
+(Московский физико-технический институт, Москва)}
 
-\usepackage{autonum}
-
-\begin{document}
-
-\title{\bf Вероятностное обоснование дистилляции моделей машинного обучения \thanks{Работа выполнена при поддержке РФФИ и правительства РФ.}}
-\date{}
-\author{}
 \maketitle
 
-\begin{center}
-\bf
-А.\,В.~Грабовой\footnote{Московский физико-технический институт, grabovoy.av@phystech.edu}, В.\,В.~Стрижов\footnote{Московский физико-технический институт, strijov@phystech.edu}
+\begin{abstract}
+Данная работа посвящена методам понижения сложности аппроксимирующих моделей. Предлагается вероятностное обоснование методов дистилляции и привилегированного обучения. В работе приведены общие выводы для произвольной параметрической функции с наперед заданой структурой. Показано теоретическое обоснование для частных случаев: линейной и логистической регрессии. Теоретические результаты анализируются в вычислительном эксперименте на синтетических выборках и реальных данных. В качестве реальных данных рассматривается выборки FashionMNIST и Twitter Sentiment Analysis.
+\end{abstract}
 
-\end{center}
-
-{\centering\begin{quote}
-\textbf{Аннотация:} 
-Данная работа посвящена методам для понижения сложности модели при помощи дистилляции. Предлагается вероятностное обоснование методов для понижения сложности моделей машинного обучения путем дистилляции и привилегированного обучения. В работе показаны общие выводы для произвольной параметрической функции с заданой сигнатурой, а также показано теоретическое обоснование для частных случаев: линейной и логистической регрессии. Теоретические результаты анализируются в вычислительном эксперименте на синтетических выборках и реальных данных. В качестве реальных данных рассматривается выборка FashionMNIST и Twitter Sentiment Analysis.
-
-\smallskip
-\textbf{Ключевые слова}: дистилляция моделей, привилегированное обучения, выбор модели, байесовские методы.
-
-\smallskip
-\textbf{DOI}: 00.00000/00000000000000
-\end{quote}
-}
 
 \section{Введение}
-%Задача выбора модели машинного обучения является одной из самых распространенных и сложных задач текущего времени.
-Повышение точности аппроксимации моделей в задачах машинного обучения влечет за собой усложнения моделей и как следствие снижает их интерпретируемость. Примером такого усложнения являются следующие модели: трансформеры~\cite{Vaswani2017}, BERT~\cite{Devlin2018}, ResNet~\cite{Kaiming2015} а также дальнейшее улучшение данной модели в виде ансамблирования. 
+%\begin{enumlist} % перечни, нумеруемые 1) 2) и т.д.
+%\item
+%ххххххххххххх хххххххххххххх х хххххххххххххх ххх ххххххх хх
+%\item
+%ххххххххххххх хххххххххххххх х хххххххххххххх ххх ххххххх хххх.
+%\end{enumlist}
+
+Повышение точности аппроксимации в задачах машинного обучения влечет за собой повышение сложности моделей и как следствие снижает их интерпретируемость. Примером такого усложнения являются следующие модели: трансформеры~\cite{Vaswani2017}, BERT~\cite{Devlin2018}, ResNet~\cite{Kaiming2015} а также ансамбли этих моделей. 
 
 При построении модели машинного обучения используется два свойства: сложность модели и точность аппроксимации модели. Сложность влияет на время, которое модель требуется для принятия решения, а также на интерпретируемость модели, следовательно модель которая имеют меньшую сложность является более предпочтительной~\cite{bachteev2018}. С другой стороны точность аппроксимации модели нужно максимизировать. В данной работе рассматривается метод \textit{дистилляции} модели. Данные метод позволяет строить новые модели на основе ранее обученых моделей.
 
@@ -77,247 +47,240 @@
 В рамках вычислительного эксперимента анализируются модели, которые используют модель учителя при обучения  и модели, которые не используют модель учителя при обучения. Для анализа используются реальные выборки для задачи классификации изображений FashionMNIST~\cite{fashionmnist} и для задачи классификации текстов Twitter Sentiment Analysis~\cite{twiter2013}. В эксперименте использовалась выборка FashionMNIST, так-как выборка MNIST имеет хорошее качество аппроксимации даже для линейного классификатора. В рамках вычислительного эксперимента использовались модели разной сложности: линейные модели, полносвязная нейронная сеть, сверточная нейронная сеть~\cite{LeCun1989}, модель Bi-LSTM~\cite{Schmidhuber1997} и модель BERT~\cite{Devlin2018}.
 
 \section{Постановка задачи обучения с учителем}
-Пусть задано множество объектов~$\bm{\Omega}$ и множество целевых переменных~$\mathbb{Y}$:
-\[
-\label{eq:st:1}
-\begin{aligned}
-\bm{\Omega}, \quad \left|\bm{\Omega}\right| = m,
-\end{aligned}
-\]
-где~$m$~--- число объектов, множество~$\mathbb{Y}=\{1,\cdots,K\}$ для задачи классификации, где~$K$ число классов, множество $\mathbb{Y}=\mathbb{R}$ для задачи регрессии.
+Задано множество объектов~$\bm{\Omega}$ и множество целевых переменных~$\mathbb{Y}$. Множество~$\mathbb{Y}=\{1,\cdots,K\}$ для задачи классификации, где~$K$ число классов, множество $\mathbb{Y}=\mathbb{R}$ для задачи регрессии.
+Для каждого объекта из~$\omega_i \in \bm{\Omega}$ задана целевая переменная~$\mathbf{y}_i = \mathbf{y}\bigr(\omega_i\bigr)$. Множество целевых переменных для всех объектов обозначим~$\mathbf{Y}$.
 Для множества~$\bm{\Omega}$ задано отображение в некоторое признаковое пространство~$\mathbb{R}^{n}$:
-\[
+\begin{gather}
 \label{eq:st:phi}
 \begin{aligned}
-\varphi:\bm{\Omega} \to \mathbb{R}^{n},
+\varphi:\bm{\Omega} \to \mathbb{R}^{n}, \quad \left|\bm{\Omega}\right| = m,
 \end{aligned}
-\]
-где~$n$ размерность признакового пространства. Обозначим~$\varphi(\bm{\Omega}) = \mathbf{X}$.
+\end{gather}
+где~$n$ размерность признакового пространства, а~$m$ количество объектов в множестве~$\bm{\Omega}$. Отображение~$\varphi$ отображает объект~$\omega_i \in \bm{\Omega}$ в соответствующий ему вектор признаков $\mathbf{x}_i = \varphi(\omega_i)$.
 Пусть для объектов~$\bm{\Omega}^* \subset \bm{\Omega}$ задана привилегированная информация:
-\[
+\begin{gather}
 \label{eq:st:phi*}
 \begin{aligned}
 \varphi^*:\bm{\Omega}^* \to \mathbb{R}^{n^*}, \quad \left|\bm{\Omega}^*\right| = m^*,
 \end{aligned}
-\]
-где~$m^* \leq m$~--- число объектов с привилегированной информацией, $n^*$~--- число признаков в пространстве привилегированной информации. Обозначим~$\varphi^*(\bm{\Omega}^*) = \mathbf{X}^*$.
+\end{gather}
+где~$m^* \leq m$~--- число объектов с привилегированной информацией, $n^*$~--- число признаков в пространстве привилегированной информации. Отображение~$\varphi^*$ отображает объект~$\omega_i \in \bm{\Omega^*}$ в соответствующий ему вектор признаков $\mathbf{x}^*_i = \varphi^*(\omega_i)$.
 
 Множество индексов объектов, для которых известна привилегированная информация, обозначим~$\mathcal{I}$:
-\[
+\begin{gather}
 \label{eq:st:3}
 \begin{aligned}
 \mathcal{I} = \{1 \leq i \leq m |~\text{для $i$-го объекта задана привилегированная информация}\},
 \end{aligned}
-\]
+\end{gather}
 а множество индексов объектов, для которых не известна привилегированная информация, обозначим $\{1, \cdots, m\}\setminus \mathcal{I} = \bar{\mathcal{I}}$.
 
 Пусть на множестве привилегированных признаков задана функция учителя~$\mathbf{f}\bigr(\mathbf{x}^*\bigr)$:
-\[
+\begin{gather}
 \label{eq:st:4}
 \begin{aligned}
 \mathbf{f}:\mathbb{R}^{n^*} \to \mathbb{Y}^*,
 \end{aligned}
-\]
-где~$\mathbb{Y}^*=\mathbb{Y}$ для задачи регрессии и $\mathbb{Y}^*$ является единичным симплексом~$\mathcal{S}_K$ в пространстве размерности~$K$ для задачи классификации. Обозначим ответы модели~$\mathbf{f}\bigr(\mathbf{x}^*_i\bigr)=\mathbf{s}_i$.  Получим ответы~$\mathbf{S}$ модели учителя~$\mathbf{f}$.
+\end{gather}
+где~$\mathbb{Y}^*=\mathbb{Y}$ для задачи регрессии и $\mathbb{Y}^*$ является единичным симплексом~$\mathcal{S}_K$ в пространстве размерности~$K$ для задачи классификации. Модель учителя~$\mathbf{f}$ ставит объекты~$\mathbf{X}^*$ в соответствие объектам~$\mathbf{S},$ то есть ~$\mathbf{f}\bigr(\mathbf{x}^*_i\bigr)=\mathbf{s}_i$.
 
-Требуется построить модель~$\mathbf{g}\bigr(\mathbf{x}\bigr)$ над множеством исходных признаков:
-\[
-\label{eq:st:5}
-\begin{aligned}
-\mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^*.
-\end{aligned}
-\]
-Пусть~$\mathbf{g}$ выбирается из некоторого множества функций:
-\[
+Требуется выбрать модель ученика~$\mathbf{g}\bigr(\mathbf{x}\bigr)$ из множества:
+\begin{gather}
 \label{eq:st:G}
 \begin{aligned}
-\mathcal{G} = \left\{\mathbf{g}| \mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^*\right\},
+\mathfrak{G} = \left\{\mathbf{g}| \mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^*\right\},
 \end{aligned}
-\]
-например для задачи классификации множество~$\mathcal{G}$ может быть параметрическим семейством функций линейных моделей $\mathcal{G} = \left\{\mathbf{g}\bigr(\mathbf{W}, \mathbf{x}\bigr)| \mathbf{g}\bigr(\mathbf{W}, \mathbf{x}\bigr) = \text{softmax}\bigr(\mathbf{W}\mathbf{x}\bigr)\right\}.$
+\end{gather}
+например для задачи классификации множество~$\mathfrak{G}$ может быть параметрическим семейством функций линейных моделей:
+\begin{gather}
+\label{eq:st:G:lin:cl}
+\begin{aligned}
+\mathfrak{G}_\text{lin,cl} = \left\{\mathbf{g}\bigr(\mathbf{W}, \mathbf{x}\bigr)| \mathbf{g}\bigr(\mathbf{W}, \mathbf{x}\bigr) = \textbf{softmax}\bigr(\mathbf{W}\mathbf{x}\bigr), \quad \mathbf{W} \in \mathbb{R}^{n\times K}\right\}.
+\end{aligned}
+\end{gather}
 
-\section{Постановка задачи: Хинтон \& Вапник}\label{state:hinton}
-Рассмотрим описание метода предложеного в работах~\cite{Hinton2015, Lopez2016}. В рамках данных работ предполагается, что~$\mathcal{I} = \{1, 2, \cdots, m\}$. В работе~\cite{Hinton2015} решается задача классификации вида:
-\[
-    \mathcal{D} = \{\left(\mathbf{x}_i, y_i\right)\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad y_i \in \{1, \cdots, K\},
-\]
-где~$y_i$~--- это класс объекта, также будем обозначать~$\mathbf{y}_i$ one hot вектором для класса~$y_i$.
+\section{Постановка задачи: Хинтона и Вапника}\label{state:hinton}
+Рассмотрим описание метода предложеного в работах~\cite{Hinton2015, Lopez2016}. В рамках данных работ предполагается, что для всех данных доступна привилегированная информация~$\mathcal{I} = \{1, 2, \cdots, m\}$. В работе~\cite{Hinton2015} решается задача классификации вида:
+\begin{gather}
+    \mathfrak{D} = \{\left(\mathbf{x}_i, y_i\right)\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad y_i \in \mathbb{Y}=\{1, \cdots, K\},
+\end{gather}
+где~$y_i$~--- это класс объекта, также будем обозначать~$\mathbf{y}_i$ вектором вероятности для класса~$y_i$.
 
-В данной постановке рассматривается параметрическое семейство функций:
-\[
+В постановке Хинтона рассматривается параметрическое семейство функций:
+\begin{gather}
 \label{eq:G:set:cl}
-\mathcal{G}_{\text{cl}} = \left\{\mathbf{g}| \mathbf{g} = \text{softmax}\bigr(\mathbf{z}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\},
-\]
-где~$\mathbf{z}$~--- это дифференцируемая параметрическая функция, $T$~--- параметр температуры. В качестве модели учителя~$\mathbf{f}$ рассматривается функция из множества~$\mathcal{F}_{\text{cl}}$:
-\[
+\mathfrak{G}_{\text{cl}} = \left\{\mathbf{g}| \mathbf{g} = \text{softmax}\bigr(\mathbf{z}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\},
+\end{gather}
+где~$\mathbf{z}$~--- это дифференцируемая параметрическая функция заданной структуры, $T$~--- параметр температуры. В качестве модели учителя~$\mathbf{f}$ рассматривается функция из множества~$\mathfrak{F}_{\text{cl}}$:
+\begin{gather}
 \label{eq:F:set:cl}
-\mathcal{F}_{\text{cl}} = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{v}: \mathbb{R}^n \to \mathbb{R}^K \right\},
-\]
-где~$\mathbf{v}$~--- это дифференцируемая параметрическая функция, $T$~--- параметр температуры. 
-
+\mathfrak{F}_{\text{cl}} = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{v}: \mathbb{R}^n \to \mathbb{R}^K \right\},
+\end{gather}
+где~$\mathbf{v}$~--- это дифференцируемая параметрическая функция заданной структуры, $T$~--- параметр температуры.
 Параметр температуры~$T$ имеет следующие свойства:
-\begin{enumerate}
-    \item[1)] при~$T\to 0$ получаем one hot вектора;
-    \item[1)] при~$T\to \infty$ получаем равновероятные классы.
-\end{enumerate}
+\begin{enumlist}
+    \item при~$T\to 0$ получаем вектор, в котором один из классов имеет единичную вероятность;
+    \item при~$T\to \infty$ получаем равновероятные классы.
+\end{enumlist}
 
-Функция потерь в которой учитывается перенос информации от модели учителя~$\mathbf{f}$ к модели ученика~$\mathbf{g}$ имеет следующий вид:
-\[
+Функция потерь~$\mathcal{L}$ в которой учитывается перенос информации от модели учителя~$\mathbf{f}$ к модели ученика~$\mathbf{g}$ имеет следующий вид:
+\begin{gather}
 \label{eq:hinton:1}
 \begin{aligned}
-   \mathcal{L}\bigr(\mathbf{g}\bigr) = &-\sum_{i=1}^{m}\underbrace{{\sum_{k=1}^{K}y^k_i\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1}}}_{\text{исходная функция потерь}}\\
+   \mathcal{L}_{st}\bigr(\mathbf{g}\bigr) = &-\sum_{i=1}^{m}\underbrace{{\sum_{k=1}^{K}y^k_i\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1}}}_{\text{исходная функция потерь}}\\
    &-\sum_{i=1}^{m}\underbrace{{\sum_{k=1}^{K}\mathbf{f}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}}}_{\text{слагаемое дистилляция}},
 \end{aligned}
-\]
-где $\cdot\bigr|_{T=t}$~--- обозначает, что параметр температуры~$T$ в предыдущей функции равно~$t$.
+\end{gather}
+где~$\cdot\bigr|_{T=t}$ обозначает, что параметр температуры~$T$ в предыдущей функции равняется~$t$.
 
 Получаем оптимизационную задачу:
-\[
+\begin{gather}
 \label{eq:hinton:opt}
 \begin{aligned}
-   \hat{\mathbf{g}} = \arg\min_{\mathbf{g} \in \mathcal{G}_{\text{cl}}} &-\sum_{i=1}^{m}{\sum_{k=1}^{K}y^k_i\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1}}\\
-   &-\sum_{i=1}^{m}{\sum_{k=1}^{K}\mathbf{f}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}}.
+   \hat{\mathbf{g}} = \arg\min_{\mathbf{g} \in \mathfrak{G}_{\text{cl}}} \mathcal{L}_{st}\bigr(\mathbf{g}\bigr).
 \end{aligned}
-\]
+\end{gather}
 
-В работе~\cite{Lopez2016} метод~\cite{Hinton2015} имеет обобщение. Решение задачи оптимизации~\eqref{eq:hinton:opt} зависит от модели учителя~$\mathbf{f}$, только через вектор ответов учителя. Следовательно признаковые пространства учителя и ученика могут различатся. В этом случае получаем следующую постановку задачи:
-\[
+Работа~\cite{Lopez2016} обобщает метод предложенный в работе~\cite{Hinton2015}. Решение задачи оптимизации~\eqref{eq:hinton:opt} зависит только от вектора ответов модели учителя~$\mathbf{f}$. Следовательно признаковые пространства учителя и ученика могут различаться. В этом случае получаем следующую постановку задачи:
+\begin{gather}
     \mathcal{D} = \left\{\left(\mathbf{x}_i, \mathbf{x}^*_i, y_i\right)\right\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad \mathbf{x}^*_i \in \mathbb{R}^{n^*}, \quad y_i \in \{1, \cdots, K\},
-\]
-где~$\mathbf{x}_i$ это информация доступна на этапах обучения и контроля, а $\mathbf{x}^*_i$ это информация доступна только на этапе обучения.
-
-В данном случае в качестве функции учителя выбирается функция~$\mathbf{f}$ не из множества~$\mathcal{F}_{cl}$, а из множества~$\mathcal{F}_{cl}^*$:
-\[
+\end{gather}
+где~$\mathbf{x}_i$ это информация доступна на этапах обучения и контроля, а $\mathbf{x}^*_i$ это информация доступна только на этапе обучения. Модель учителя принадлежит множеству моделей~$\mathfrak{F}_{cl}^*$:
+\begin{gather}
 \label{eq:F:set:cl:priv}
-\mathcal{F}_{\text{cl}}^* = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}^*\bigr(\mathbf{x}^*\bigr)/T\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R}^K \right\},
-\]
-где~$\mathbf{v}^*$~--- это дифференцируемая параметрическая функция, $T$~--- параметр температуры. 
+\mathfrak{F}_{\text{cl}}^* = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}^*\bigr(\mathbf{x}^*\bigr)/T\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R}^K \right\},
+\end{gather}
+где~$\mathbf{v}^*$~--- это дифференцируемая параметрическая функция заданой структуры, $T$~--- параметр температуры. Множество моделей~$\mathfrak{F}_{cl}^*$ отличается от множества моделей~$\mathfrak{F}_{cl}$ из выражения~\eqref{eq:F:set:cl}. В множестве~$\mathfrak{F}_{cl}$ модели используют пространство исходных признаков, а в множестве~$\mathfrak{F}_{cl}^*$ модели используют пространство привилегированных признаков. Функция потерь \eqref{eq:hinton:1} в случае модели учителя~$\mathbf{f} \in \mathfrak{F}_{cl}^*$ переписывается в следующем виде:
+\begin{gather}
+\label{eq:hinton:L:new}
+\begin{aligned}
+   \mathcal{L}_{st}\bigr(\mathbf{g}\bigr) = &-\sum_{i=1}^{m}{\sum_{k=1}^{K}y^k_i\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1}}-\sum_{i=1}^{m}{\sum_{k=1}^{K}\mathbf{f}\bigr(\mathbf{x}^*_i\bigr)\bigr|_{T=T_0}\log\mathbf{g}\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0}},
+\end{aligned}
+\end{gather}
+где~$\cdot\bigr|_{T=t}$ обозначает, что параметр температуры~$T$ в предыдущей функции равняется~$t$.
 
 Требуется построить модель, которая использует привилегированную информацию $\mathbf{x}^*_i$ при обучении. Для этого рассмотрим двухэтапную модель обучения предложенную в работе~\cite{Lopez2016}:
-\begin{enumerate}
-    \item[1)] выбираем оптимальную модель учителя $\mathbf{f} \in \mathcal{F}_{\text{cl}}^*$;
-    \item[2)] выбираем оптимальную модель ученика $\mathbf{g} \in \mathcal{G}_{\text{cl}}$ используя дистилляцию~\cite{Hinton2015}. 
-\end{enumerate}
+\begin{enumlist}
+    \item выбираем оптимальную модель учителя $\mathbf{f} \in \mathfrak{F}_{\text{cl}}^*$;
+    \item выбираем оптимальную модель ученика $\mathbf{g} \in \mathfrak{G}_{\text{cl}}$ используя дистилляцию~\cite{Hinton2015}. 
+\end{enumlist}
 
-Модель ученика~--- это функция, которая минимизирует \eqref{eq:hinton:1}. Модель учителя~--- это функция, которая минимизирует Cross Entropy Loss:
-\[
+Модель ученика~--- это функция, которая минимизирует \eqref{eq:hinton:L:new}. Модель учителя~--- это функция, которая минимизирует кросс--энтропийную функции ошибки:
+\begin{gather}
 \label{eq:hinton.2}
 \begin{aligned}
-   \mathcal{L}\bigr(\mathbf{f}\bigr) = &-\sum_{i=1}^{m}{{\sum_{k=1}^{K}y^k_i\log\mathbf{f}\bigr(\mathbf{x}^*_i\bigr)}}.
+   \mathcal{L}_{th}\bigr(\mathbf{f}\bigr) = &-\sum_{i=1}^{m}{{\sum_{k=1}^{K}y^k_i\log\mathbf{f}\bigr(\mathbf{x}^*_i\bigr)}}.
    \end{aligned}
-\]
+\end{gather}
 
 \section{Постановка задачи: вероятностный подход}
+
 \subsection{Метод максимального правдоподобия}
-Для поиска~$\hat{\mathbf{g}}$ воспользуемся методом максимального правдоподобия:
-\[
-\label{eq:st:6}
-\begin{aligned}
-p\bigr(\mathbf{Y}|\mathbf{X}, \mathbf{g}\bigr) = \prod_{i=1}^{N}p\bigr(\mathbf{y}_{i}|\mathbf{x}_i, \mathbf{g}\bigr).
-\end{aligned}
-\]
-В качестве~$\hat{\mathbf{g}}$ выбирается функция, которая максимизирует правдоподобие модели~\eqref{eq:st:6}:
-\[
+Задано распределения целевой переменной~$p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)$.
+Для поиска~$\hat{\mathbf{g}}$ воспользуемся методом максимального правдоподобия. В качестве~$\hat{\mathbf{g}}$ выбирается функция, которая максимизирует правдоподобие модели:
+\begin{gather}
 \label{eq:st:7}
 \begin{aligned}
-\hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathcal{G}} \prod_{i=1}^{N}p\bigr(\mathbf{y}_{i}|\mathbf{x}_i, \mathbf{g}\bigr),
+\hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathfrak{G}} \prod_{i=1}^{N}p\bigr(\mathbf{y}_{i}|\mathbf{x}_i, \mathbf{g}\bigr),
 \end{aligned}
-\]
-где множество~$\mathcal{G}$ задается~\eqref{eq:st:G}.
+\end{gather}
+где множество~$\mathfrak{G}$ задается~\eqref{eq:st:G}.
 \subsection{Подход дистилляции модели учителя в модель ученика}
 Рассмотрим вероятностную постановку, в которой должны быть выполнены ограничения:
-\begin{enumerate}
-	\item[1)] для всех $\omega \in \bm{\Omega}^*$ элементы $\mathbf{y}(\omega)$ и $\mathbf{s}(\omega)$ являются зависимыми величинами, так как ответы учителя должны коррелировать с истинными ответами;
-	\item[2)] если $|\bm{\Omega}^*|=0$ то решение должно соответствовать решению~\eqref{eq:st:7};
-	\item[3)] рассмотрим параметр~$\lambda\in[0,1]$ как уровень доверия к ответам модели~$\mathbf{f}$, которая задана в~\eqref{eq:st:4}.
-\end{enumerate}
+\begin{enumlist}
+	\item задано распределение целевой переменной~$p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)$;
+	\item задано совместное распределение целевой переменной и ответов модели учителя~$p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr)$;
+	\item для всех $\omega \in \bm{\Omega}^*$ элементы $\mathbf{y}(\omega)$ и $\mathbf{s}(\omega)$ являются зависимыми величинами, так как ответы учителя должны коррелировать с истинными ответами;
+	\item если $|\bm{\Omega}^*|=0$ то решение должно соответствовать решению~\eqref{eq:st:7}.
+\end{enumlist}
 
 Рассмотрим совместное правдоподобие истинных меток и меток учителя:
-\[
+\begin{gather}
 \label{eq:st:8}
 \begin{aligned}
-p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}, \lambda\bigr).
+p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr).
 \end{aligned}
-\]
-Рассмотрим~$p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{X}, \mathbf{g}, \lambda\bigr)$ следующего вида:
-\[
+\end{gather}
+Расспишем~$p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr)$ по формуле условной вероятности:
+\begin{gather}
 \label{eq:st:bernuli}
 \begin{aligned}
-p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{X}, \mathbf{g}, \lambda\bigr) = p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}\bigr(\mathbf{s}_i|\mathbf{y}_i, \mathbf{x}_i, \mathbf{g}\bigr)
+p\bigr(\mathbf{y}_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr) = p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)p\bigr(\mathbf{s}_i|\mathbf{y}_i, \mathbf{x}_i, \mathbf{g}\bigr)
 \end{aligned}
-\]
+\end{gather}
 Подставляя выражения~\eqref{eq:st:bernuli} в~\eqref{eq:st:8} получаем.
-\[
+\begin{gather}
 \label{eq:st:9}
 \begin{aligned}
-p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{s}_i|\mathbf{y}_i, \mathbf{x}_i, \mathbf{g}\bigr).
+p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{s}_i|\mathbf{y}_i, \mathbf{x}_i, \mathbf{g}\bigr).
 \end{aligned}
-\]
+\end{gather}
 Заметим, что~$\mathbf{y}_i$ и~$\mathbf{s}_i$ зависимы только через переменную~$\mathbf{x}_i$, тогда~$p\bigr(\mathbf{s}_i|\mathbf{y}_i, \mathbf{x}_i, \mathbf{g}\bigr)=p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr)$. Получаем совместное правдоподобие:
-\[
+\begin{gather}
 \label{eq:st:10}
 \begin{aligned}
-p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}, \lambda\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr).
+p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr).
 \end{aligned}
-\]
+\end{gather}
 Используя~\eqref{eq:st:10} получаем следующую оптимизационную задачу для поиска~$\hat{\mathbf{g}}$
-\[
+\begin{gather}
 \label{eq:st:11}
 \begin{aligned}
 \hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathcal{G}} \prod_{i\not\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr).
 \end{aligned}
-\]
+\end{gather}
 Для удобства, будем минимизировать логарифм, тогда из~\eqref{eq:st:11} получаем:
-\[
+\begin{gather}
 \label{eq:st:12}
 \begin{aligned}
 \hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathcal{G}} \sum_{i\not\in \mathcal{I}}\log p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr) + \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\log p\bigr(\mathbf{y}_i|\mathbf{x}_i, \mathbf{g}\bigr) + \lambda\sum_{i\in \mathcal{I}}\log p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr),
 \end{aligned}
-\]
-где параметр~$\lambda$ введен для взвешивания ошибок на истинных ответах и ошибок относительно ответов учителя.
+\end{gather}
+где параметр~$\lambda \in [0,1]$ введен для взвешивания ошибок на истинных ответах и ошибок относительно ответов учителя.
 
 \begin{figure}[h!t]\center
 \includegraphics[width=0.35\textwidth]{figures/general_model}
-\caption{Общий вид модели в формате plate notation.}
+\caption{Вероятностная модель в формате плоских нотаций.}
 \label{fg:st:plate}
 \end{figure}
 
-На рис.~\ref{fg:st:plate} показан общий вид вероятностной модели в графовой нотации. Для каждой реализации функции $\mathbf{g}$ данный вид изменяется. На рис~\ref{fg:ex:synt:plate} показана более подробная реализация в случае, когда модель~$\mathbf{g}$ это линейная модель.
+На рис.~\ref{fg:st:plate} показан вид вероятностной модели в графовой нотации, для произвольной функции~$\mathbf{g}$. Для каждой реализации~$\mathbf{g}$ соответсвующий блок требует уточнение. На рис~\ref{fg:ex:synt:plate} показана более подробная реализация в случае, когда модель~$\mathbf{g}$ это линейная модель.
 
-\section{Частные случаи обучения с учителем}
+\section{Обучение с учителем для задачи классификации и регрессии}
 \subsection{Случай классификации}
 Для задачи многоклассовой классификации рассматриваются следующие вероятностные предположения:
-\begin{enumerate}
+\begin{enumlist}
 \label{st:class:1}
-	\item[1)] рассматривается функция учителя $\mathbf{f}\in\mathcal{F}_{\text{cl}}^{*}$;
-	\item[2)] рассматривается функция ученика следующего вида $\mathbf{g}\in\mathcal{G}_{\text{cl}}$;
-	\item[3)] для истинных меток рассмотривается категориальное распределение, задаваемое своей плотностью $p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$, где $\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$ задает вероятность каждого класса;
-	\item[4)] для меток учителя рассматривается плотность распределения
-\[
+	\item рассматривается функция учителя $\mathbf{f}\in\mathfrak{F}_{\text{cl}}^{*}$~\eqref{eq:F:set:cl:priv};
+	\item рассматривается функция ученика следующего вида $\mathbf{g}\in\mathfrak{G}_{\text{cl}}$~\eqref{eq:G:set:cl};
+	\item для истинных меток рассматривается категориальное распределение~$p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$, где $\mathbf{g}\bigr(\mathbf{x}\bigr)$ задает вероятность каждого класса;
+	\item для меток учителя введем плотность распределения
+\begin{gather}
 \label{reg:dist}
 \begin{aligned}
-	p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) = C\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k}.
+	p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) = C\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k},
 \end{aligned}
-\]
-\end{enumerate}
+\end{gather}
+где~$g^k$ обозначает предсказаную вероятность~$$
+\end{enumlist}
 \begin{theorem}
 \label{theorem:st:dist}
 Пусть для всех $k$ выполняется $1 > 1- \varepsilon > g_k\bigr(\mathbf{x}\bigr) > \varepsilon > 0,$ тогда при 
-\[
+\begin{gather}
 C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)\log g_k\bigr(\mathbf{x}\bigr)
-\]
+\end{gather}
 функция $p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr)$ определенная в~\eqref{reg:dist} является плотностью распределения.
 \end{theorem}
 \begin{proof}
-	\item[1)] Покажем, что для произвольного $\mathbf{s} \in \mathcal{S}_K$ выполняется $p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) \geq 0$. Заметим, что для всех~$k$ выполняется, что~$\log g_k\bigr(\mathbf{x}\bigr) < 0,$ тогда
-\[
+	Во-первых покажем, что для произвольного $\mathbf{s} \in \mathcal{S}_K$ выполняется $p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) \geq 0$. Заметим, что для всех~$k$ выполняется, что~$\log g_k\bigr(\mathbf{x}\bigr) < 0,$ тогда
+\begin{gather}
 \begin{aligned}
 	C=\underbrace{\frac{K^{K/2}}{2^{K(K-1)/2}}}_{>0}\prod_{k=1}^{K}\underbrace{g_k\bigr(\mathbf{x}\bigr)}_{>\varepsilon}\underbrace{\left(-\log g_k\bigr(\mathbf{x}\bigr)\right)}_{>0} > 0,
 \end{aligned}
-\]
+\end{gather}
 тогда с учетом того, что~$g_k\bigr(\mathbf{x}\bigr) >0$ и~$C>0$ получаем, что $p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) \geq 0$.
-	\item[2)] Покажем, что интеграл по всему пространству объектов~$\mathcal{S}_K$ является конечным:
-	\[
+	Во-вторых покажем, что интеграл по всему пространству объектов~$\mathcal{S}_K$ является конечным:
+	\begin{gather}
 	\label{theorem:st:dist:eq:1}
 	\begin{aligned}
 		\int_{\mathcal{S}_K}p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr)ds &= \int_{\mathcal{S}_K}\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k}ds = \prod_{k=1}^{K}\int_{\mathcal{S}_K}g_k\bigr(\mathbf{x}\bigr)^{s^k}ds\\ 
@@ -327,83 +290,82 @@ C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf
 		& = \left(-D\right)^K\left(K-1\right)!^K\prod_{k=1}^{K}\log g_k\bigr(\mathbf{x}\bigr)\left(1 -g_k\bigr(\mathbf{x}\bigr) \exp_{K-1}\bigr(-\log g_k\bigr(\mathbf{x}\bigr)\bigr)+g_k\bigr(\mathbf{x}\bigr)\right) \\
 		& = \frac{\left(-\sqrt{K}\right)^K}{2^{K(K-1)/2}}\prod_{k=1}^{K}\log g_k\bigr(\mathbf{x}\bigr)\left(1 -g_k\bigr(\mathbf{x}\bigr) \exp_{K-1}\bigr(-\log g_k\bigr(\mathbf{x}\bigr)\bigr)+g_k\bigr(\mathbf{x}\bigr)\right) < \infty,
 	\end{aligned}
-	\]
+	\end{gather}
 где~$\Gamma\bigr(K\bigr)$ является гамма функцией, $\Gamma\bigr(K, -\log g_k\bigr(\mathbf{x}\bigr)\bigr)$ является неполной гамма функцией, $\exp_{n}\bigr(x\bigr)$ является суммой Тейлора из первых~$n$ слагаемых. В рамках приближенных расчетов будем считать, что $\exp_{n}\bigr(x\bigr)\approx\exp\bigr(x\bigr),$ тогда с учетом~\eqref{theorem:st:dist:eq:1} получаем:
-	\[
+	\begin{gather}
 	\label{theorem:st:dist:eq:2}
 	\begin{aligned}
 		C\bigr(\mathbf{g}, \mathbf{x}\bigr) = \int_{\mathcal{S}_K}p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr)ds \approx \left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)\log g_k\bigr(\mathbf{x}\bigr)
 	\end{aligned}
-	\]
+	\end{gather}
 \end{proof}
-	
 Используя предположения~1)--4) и подставляя в~\eqref{eq:st:12} получаем следующую оптимизационную задачу:
-\[
+\begin{gather}
 \label{eq:st:class:1}
 \begin{aligned}
 \hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathcal{G}} & \sum_{i\not\in \mathcal{I}}\sum_{k=1}^{K}y_i^k\log g_k\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1} \\
 &+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\sum_{k=1}^{K}y_i^k\log g_k\bigr(\mathbf{x}_i\bigr)\bigr|_{T=1} + \lambda\sum_{i\in \mathcal{I}}\sum_{k=1}^{K}s_{i,k}\log g_k\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0} \\
 &+ \lambda \sum_{i\in \mathcal{I}}\sum_{k=1}^{K}\left(\log g_k\bigr(\mathbf{x}_i\bigr)\bigr|_{T=T_0} + \log\log\frac{1}{g_k\bigr(\mathbf{x}_i\bigr)}\bigr|_{T=T_0}\right),
 \end{aligned}
-\]
+\end{gather}
 где выражение $\cdot\bigr|_{T=t}$ обозначает, что в предыдущую функцию $\text{softmax}$ требуется подставить значение температуры~$T$ равное некоторому значению~$t$.
 
 Проанализировав выражение~\eqref{eq:st:class:1} получаем, что первые три слагаемые совпадают со слагаемыми в выражении~\eqref{eq:hinton:1} при~$\mathcal{I} = \{1, \cdots, m\},$ и $\lambda=\frac{1}{2}$, а третье слагаемое является некоторым регуляризатором, который получен из вида распределения.
 
 Анализируя первые 3 слагаемых в выражении~\eqref{eq:st:class:1} получаем, что при~$T_0 = 1$ получаем сумму кросс энтропий между двумя распределениями для каждого объекта:
-\begin{enumerate}
-	\item[1)] первое распределение это выпуклая комбинация с весом~$1-\lambda$ и $\lambda$: распределения задаваемое метками объектов~$\text{Cat}\bigr(\mathbf{y}\bigr)$ и распределения задаваемого моделью учителя~$\text{Cat}\bigr(\mathbf{s}\bigr)$
-	\item[2)] второе распределение это распределение задаваемое моделью ученика~$\text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$.
-\end{enumerate}
+\begin{enumlist}
+	\item первое распределение это выпуклая комбинация с весом~$1-\lambda$ и $\lambda$: распределения задаваемое метками объектов~$\text{Cat}\bigr(\mathbf{y}\bigr)$ и распределения задаваемого моделью учителя~$\text{Cat}\bigr(\mathbf{s}\bigr)$
+	\item второе распределение это распределение задаваемое моделью ученика~$\text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$.
+\end{enumlist}
 Получаем, что модель ученика восстанавливает плотность не исходных меток, а новую плотность, которая является выпуклой комбинаций плотности исходных меток и меток учителя.
 \subsection{Случай регрессии}
 Для задачи регрессии рассматриваются следующие вероятностные предположения:
-\begin{enumerate}
-	\item[1)] рассматривается функция учителя~$\mathbf{f}\in\mathcal{F}_{\text{rg}}^{*}$:
-	\[
+\begin{enumlist}
+	\item рассматривается функция учителя~$\mathbf{f}\in\mathcal{F}_{\text{rg}}^{*}$:
+	\begin{gather}
 	\label{eq:F:set:priv}
 	\begin{aligned}
 	\mathcal{F}_{\text{rg}}^* = \left\{\mathbf{f}| \mathbf{f} = \mathbf{v}^*\bigr(\mathbf{x}^*\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R} \right\},
 	\end{aligned}
-	\]
+	\end{gather}
 	где~$\mathbf{v}^*$~--- это дифференцируемая параметрическая функция;
-	\item[2)] рассматривается функция ученика~$\mathbf{g}\in\mathcal{G}_{\text{rg}}$:
-\[
-\label{eq:G:set:cl}
+	\item рассматривается функция ученика~$\mathbf{g}\in\mathcal{G}_{\text{rg}}$:
+\begin{gather}
+\label{eq:G:set:rg}
 \mathcal{G}_{\text{rg}} = \left\{\mathbf{g}| \mathbf{g} = \mathbf{z}\bigr(\mathbf{x}\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\},
-\]
+\end{gather}
 где~$\mathbf{z}$~--- это дифференцируемая параметрическая функция;
-	\item[3)] истинные метки имеют нормальное распределение распределение
-	\[
+	\item истинные метки имеют нормальное распределение распределение
+	\begin{gather}
 		p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(y|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma\bigr);
-	\]
-	\item[4)] метки учителя распределены
-	\[
+	\end{gather}
+	\item метки учителя распределены
+	\begin{gather}
 		p\bigr(s| \mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(s|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma_s\bigr);
-	\]
-\end{enumerate}
+	\end{gather}
+\end{enumlist}
 
 Используя предположения~1)--4) и подставляя в~\eqref{eq:st:12} получаем следующую оптимизационную задачу:
-\[
+\begin{gather}
 \label{eq:st:reg:1}
 \begin{aligned}
 \hat{g} = \arg\min_{g\in \mathcal{G}} & \sum_{i\not\in \mathcal{I}}\sigma^2\left(y_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2 \\
 &+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\sigma^2\left(y_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2 + \lambda\sum_{i\in \mathcal{I}}\sigma_s^2\left(s_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2.
 \end{aligned}
-\]
+\end{gather}
 Выражение~\eqref{eq:st:reg:1} записано с точностью до аддитивной константы относительно~$\mathbf{g}$. 
 
 \begin{theorem}
 \label{theorem:st:reg}
 Пусть множество~$\mathcal{G}$ описывает класс линейных функций вида~$\mathbf{g}\bigr(\mathbf{x}\bigr) = \mathbf{w}^{\mathsf{T}}\mathbf{x}.$ Тогда решение оптимизационной задачи~\eqref{eq:st:reg:1} эквивалентно решению следующей задачи линейной регрессии:
-\[
+\begin{gather}
 \label{eq:st:reg:th:st:1}
 \begin{aligned}
 \mathbf{y''} = \mathbf{X}\mathbf{w} + \bm{\varepsilon},~\bm{\varepsilon} \sim \mathcal{N}\bigr(\mathbf{0}, \bm{\Sigma}\bigr),
 \end{aligned}
-\]
+\end{gather}
 где $\bm{\Sigma}^{-1}=\text{diag}\bigr(\bm{\sigma'}\bigr)$ и $\mathbf{y''}$ имеют следующий вид:
-\[
+\begin{gather}
 \label{eq:st:reg:th:st:2}
 \begin{aligned}
 \sigma'_{i} &= \begin{cases}
@@ -416,54 +378,54 @@ y'_i &= \begin{cases}
 \left(1-\lambda\right)\sigma^2y_i+\lambda\sigma_s^2s_i,~\text{иначе}\\
 \end{cases}.
 \end{aligned}
-\]
+\end{gather}
 \end{theorem}
 \begin{proof}
 %Обозначим подвектор вектора ответов~$\mathbf{y}$ для элементов которого доступна привилегированная информация $\mathbf{y}_{\mathcal{I}} = [y_i| i \in \mathcal{I}]^{\mathsf{T}},$ а дополнение данного вектора $\mathbf{y}_{\bar{\mathcal{I}}} = [y_i| i \not \in \mathcal{I}]^{\mathsf{T}}.$ Обозначим подматрицу матрицы объектов~$\mathbf{X}$ для которой доступна  привилегированная информация $\mathbf{X}_{\mathcal{I}} = [\mathbf{x}_i| i \in \mathcal{I}],$  подматрица объектов для которых она не доступна $\mathbf{X}_{\bar{\mathcal{I}}} = [\mathbf{x}_i| i \not \in \mathcal{I}].$  Обозначим подвектор $\mathbf{s}_{\mathcal{I}} = [s_i| i \in \mathcal{I}]$ вектора $\mathbf{s}$ для которых доступна привилегированная информация.
 В доказательстве используется обозначения~$\mathbf{a}_{\mathcal{J}} = [a_i| i \in \mathcal{J}]^{\mathsf{T}},$ где~$\mathbf{a}$ произвольный вектор, а $\mathcal{J}$ произвольное не пустое индексное множество. К примеру подвектор вектора ответов~$\mathbf{y}$ для элементов которого доступна привилегированная информация обозначается $\mathbf{y}_{\mathcal{I}} = [y_i| i \in \mathcal{I}]^{\mathsf{T}}$. Аналогичная операция рассматривается для матрицы объектов~$\mathbf{X}_\mathcal{I}=[\mathbf{x}_{i}| i \in \mathcal{I}]^{\mathsf{T}}$.
 
 В случае линейной модели, когда~$\mathbf{g}\bigr(\mathbf{x}\bigr) = \mathbf{w}^{\mathsf{T}}\mathbf{x}$ выражение \eqref{eq:st:reg:1} принимает вид:
-\[
+\begin{gather}
 \label{eq:st:reg:2}
 \begin{aligned}
 \hat{\mathbf{w}} = \arg\min_{\mathbf{w}\in \mathcal{W}} &~ \sigma^2\left(\mathbf{y}_{\bar{\mathcal{I}}}-\mathbf{X}_{\bar{\mathcal{I}}}\mathbf{w}\right)^{\mathsf{T}}\left(\mathbf{y}_{\bar{\mathcal{I}}}-\mathbf{X}_{\bar{\mathcal{I}}}\mathbf{w}\right) \\
 &+ \sigma^2\left(1-\lambda\right)\left(\mathbf{y}_{\mathcal{I}}-\mathbf{X}_{\mathcal{I}}\mathbf{w}\right)^{\mathsf{T}}\left(\mathbf{y}_{\mathcal{I}}-\mathbf{X}_{\mathcal{I}}\mathbf{w}\right) + \sigma^2_s\lambda\left(\mathbf{s}_{\mathcal{I}}-\mathbf{X}_{\mathcal{I}}\mathbf{w}\right)^{\mathsf{T}}\left(\mathbf{s}_{\mathcal{I}}-\mathbf{X}_{\mathcal{I}}\mathbf{w}\right).
 \end{aligned}
-\]
+\end{gather}
 
 Раскроем скобки и сгруппируем:
-\[
+\begin{gather}
 \label{eq:st:reg:3}
 \begin{aligned}
 \hat{\mathbf{w}} = \arg\min_{\mathbf{w}\in \mathcal{W}} &~ \sigma^2\left(\mathbf{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{X}_{\bar{\mathcal{I}}}\mathbf{w} - 2\mathbf{y}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{X}_{\bar{\mathcal{I}}}\mathbf{w}\right) \\
 &+ \left(1-\lambda\right)\sigma^2\left(\mathbf{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}}\mathbf{w}- 2\mathbf{y}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}}\mathbf{w}\right) + \lambda\sigma^2_s\left(\mathbf{w}^{\mathsf{T}}\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}}\mathbf{w}- 2\mathbf{s}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}}\mathbf{w}\right)
 \end{aligned}
-\]
+\end{gather}
 Продифференцируем выражение, приравняем к нулю и сгруппируем элементы:
-\[
+\begin{gather}
 \label{eq:st:reg:4}
 \begin{aligned}
 \left(\sigma^{2}\mathbf{X}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{X}_{\bar{\mathcal{I}}} + \left(1-\lambda\right)\sigma^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}} + \lambda\sigma^{2}_s\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}}\right) \mathbf{w} =& 2\sigma^2\mathbf{X}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{y}_{\bar{\mathcal{I}}} \\
 &+ 2\left(1-\lambda\right)\sigma^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{y}_{\mathcal{I}} + 2\lambda\sigma_s^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{s}_{\mathcal{I}}.
 \end{aligned}
-\]
+\end{gather}
 Легко получить следующие равенства:
-\[
+\begin{gather}
 \label{eq:st:reg:simp}
 \begin{aligned}
 \sigma^{2}\mathbf{X}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{X}_{\bar{\mathcal{I}}} + \left(1-\lambda\right)\sigma^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}} + \lambda\sigma^{2}_s\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{X}_{\mathcal{I}} &= \mathbf{X}^{\mathsf{T}}\bm{\Sigma}^{-1}\mathbf{X},\\
 2\sigma^2\mathbf{X}^{\mathsf{T}}_{\bar{\mathcal{I}}}\mathbf{y}_{\bar{\mathcal{I}}} + 2\left(1-\lambda\right)\sigma^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{y}_{\mathcal{I}} + 2\lambda\sigma_s^2\mathbf{X}^{\mathsf{T}}_{\mathcal{I}}\mathbf{s}_{\mathcal{I}} &= 2\mathbf{X}\mathbf{y'},
 \end{aligned}
-\]
+\end{gather}
 где~$\bm{\Sigma}$ и~$\mathbf{y'}$ из условия задачи~\eqref{eq:st:reg:th:st:2}.
 
 Подставляя~\eqref{eq:st:reg:simp} в~\eqref{eq:st:reg:4} получаем:
-\[
+\begin{gather}
 \label{eq:st:reg:5}
 \begin{aligned}
 \mathbf{w} = 2\left(\mathbf{X}^{\mathsf{T}}\bm{\Sigma}^{-1}\mathbf{X}\right)^{-1}\mathbf{X}\bm{\Sigma}^{-1}\mathbf{y''},
 \end{aligned}
-\]
+\end{gather}
 что соответсвует решению задачи~\eqref{eq:st:reg:th:st:1}.
 \end{proof}
 
@@ -485,12 +447,12 @@ y'_i &= \begin{cases}
 
 \subsection{Синтетический эксперимент}
 Проанализируем модель на синтетической выборке. Выборка построенная следующим образом:
-\[
+\begin{gather}
 \begin{aligned}
 \mathbf{W} &= \left[\mathcal{N}\bigr(w_{jk}|0, 1\bigr)\right]_{n\times K}, \quad &\mathbf{X} &= \left[\mathcal{N}\bigr(x_{ij}|0, 1\bigr)\right]_{m\times n}, \\
  \mathbf{S} &= \text{softmax}\left(\mathbf{XW}\right), \quad &\mathbf{y} &= \left[\text{Cat}\bigr(y_i| \mathbf{s}_i\bigr)\right],
 \end{aligned}
-\]
+\end{gather}
 где функция~$\text{softmax}$ берется построчно. Строки матрицы~$\mathbf{S}$ будем рассматривать как предсказание учителя, то есть учитель знает истинные вероятности каждого класса. На рис.~\ref{fg:ex:synt:plate} показана вероятностная модель в графовой нотации. В эксперименте число признаков~$n=10$, число классов~$K=3$, для обучения было сгенерировано~$m_{\text{train}}=1000$ и~$m_{\text{test}}=100$ объектов.
 
 На рис.~\ref{fg:ex:synt:distr:real} показано распределение по классам для каждого объекта обучающей выборки. Видно, что все классы являются равновероятными.
@@ -548,7 +510,7 @@ y'_i &= \begin{cases}
 В качестве модели учителя использовалась модель Bi-LSTM с~$170$ тысячами параметров для обучения. В качестве эмбедингов обучалась матрица из~$30$ миллионов параметров в единой процедуре с моделью BI-LSTM. Обученная модель предсказывает с точностью~$0{,}835$. В качестве модели ученика рассматривается модель с $1538$ параметрами, но в качестве эмбедингов рассматривается переобученная модель BERT. Результаты данной части эксперимента показаны в табл.~\ref{tb:ce:1}.
 
 
-\section{Выводы}
+\section{Заключение}
 \begin{table}[]
 \begin{center}
 \begin{tabular}{|l|l|c|c|c|}
@@ -578,7 +540,7 @@ y'_i &= \begin{cases}
 
 В дальнейшем предполагается обобщить метод описаный в пункте~$4$ используя Байесовский подход выбора моделей машинного обучения. Также в рамках байесовсокго подхода планируется улучшить методы для получения улучшения качества не только для задачи классификации, а и для задачи регрессии.
 
-\begin{thebibliography}{99}
+\begin{thebibliography}{10}
 \bibitem{LeCun1989}
 	\textit{Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard and L. D. Jackel} Backpropagation Applied to Handwritten Zip Code Recognition // Neural Computation. 1989. Vol.1 No 4. pp. 541--551.
 \bibitem{Schmidhuber1997}
@@ -597,7 +559,7 @@ AND PRIVILEGED INFORMATION // Published as a conference paper at ICLR. 2016.
 \bibitem{Hinton2015}
         \textit{Geoffrey Hinton, Oriol Vinyals, jeff Dean} Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
 \bibitem{mnist}
-	\textit{LeCun Y.,  Cortes C., Burges C.} The MNIST dataset of handwritten digits, 1998. \url{http://yann.lecun.com/exdb/mnist/index.html}
+	\textit{LeCun Y.,  Cortes C., Burges C.} The MNIST dataset of handwritten digits, 1998. \text{http://yann.lecun.com/exdb/mnist/index.html}
 \bibitem{fashionmnist}
 	\textit{Han Xiao and Kashif Rasul and Roland Vollgraf} Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms // arXiv, 2017.
 \bibitem{kingma2014}
@@ -609,5 +571,9 @@ AND PRIVILEGED INFORMATION // Published as a conference paper at ICLR. 2016.
  \end{thebibliography}
 
 
-\end{document}
+\AdditionalInformation{Грабовой А.В.}{Московский физико-технический институт, студент, Москва}{grabovoy.av@phystech.edu}
 
+\AdditionalInformation{Стрижов В.В.}{Московский физико-технический институт, проффесор, Москва}{strijov@phystech.edu}
+
+
+\end{document}

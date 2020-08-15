@@ -1,0 +1,71 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{euscript}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{adjustbox}
+
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{arrows}
+
+\pgfrealjobname{levels_ext}
+
+\begin{document}
+
+\beginpgfgraphicnamed{general_model}
+  \tikz{
+    % nodes
+     \node[obs] (y) {$y_i$};%
+     \factor[left=of y] {y-f} {below:$\text{Cat}$} {} {} ; %
+     \node[det, left=of y] (g) {$\mathbf{g}$}; %
+     
+     \node[obs, below=of g] (s) {$\mathbf{s}_i$};%
+     
+     \node[obs, left=of g] (x) {$\mathbf{x}_i$};%
+    % plates
+     \plate {xy} {(x) (y) (g)} {$m$}; %
+     \plate {xs} {(x) (s) (g)} {$m^*$}; %
+    % edges
+    \edge[-] {x} {g} ;
+    \edge {g} {y} ; %
+    \edge {g} {s} ; %
+ }
+\endpgfgraphicnamed
+
+\beginpgfgraphicnamed{linear_model}
+  \tikz{
+    % nodes
+     \node[obs] (y) {$y_i$};%
+     \factor[left=of y] {y-f} {above:$\text{Cat}$} {} {} ; %
+     \node[det, left=of y-f] (softmax) {softmax}; % 
+     \node[det, left=of softmax] (dot) {dot}; % 
+    
+     \node[obs, below=of softmax] (s)  {$\mathbf{s}_i$};%
+     
+     \node[obs, above=of dot] (x) {$\mathbf{x}_i$};%
+     \node[latent, left=of dot] (w) {$\mathbf{W}$}; %
+    % plates
+     \plate {xy} {(x) (y) (dot) (softmax)} {$n$}; %
+     \plate {xs} {(x) (s) (dot) (softmax)} {$n^*$}; %
+    % edges
+    \edge[-] {w,x} {dot} ;
+    \edge {softmax} {y} ; %
+    \edge {dot} {softmax} ; %
+    \edge {softmax}{s} ; %
+ }
+\endpgfgraphicnamed
+
+\end{document}
