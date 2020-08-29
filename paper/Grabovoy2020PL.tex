@@ -6,7 +6,10 @@
 \documentclass[12pt]{a&t}
 \usepackage{graphicx}
 \usepackage{bm}
+\usepackage{url}
 \usepackage{multirow}
+
+\usepackage{autonum}
 
 \begin{document}  %%%!!!
 
@@ -23,6 +26,9 @@
 
 \begin{abstract}
 Данная работа посвящена методам понижения сложности аппроксимирующих моделей. Предлагается вероятностное обоснование методов дистилляции и привилегированного обучения. В работе приведены общие выводы для произвольной параметрической функции с наперед заданной структурой. Показано теоретическое обоснование для частных случаев: линейной и логистической регрессии. Теоретические результаты анализируются в вычислительном эксперименте на синтетических выборках и реальных данных. В качестве реальных данных рассматривается выборки FashionMNIST и Twitter Sentiment Analysis.
+
+\smallskip\\
+\textit{Ключевые слова}: выбор модели; байесовский вывод; дистилляция модели; привилегированное обучение.
 \end{abstract}
 
 
@@ -35,7 +41,7 @@
 Дистилляция модели~--- уменьшение сложности модели путем выбора модели в множестве более простых моделей с использованием ответов более сложной модели.
 \end{definition}
 
-В работе~\cite{Hinton2015} Дж.\,Е. Хинттоном рассматривается метод дистилляции моделей машинного обучения для задачи классификации. В работе проведен ряд экспериментов, в которых проводилась дистилляции моделей для разных задач машинного обучения. Эксперимент на выборке MNIST~\cite{mnist}, в котором избыточно сложно нейросеть была дистиллирована в нейросеть меньшей сложности. Эксперимент по Speech Recognition, в котором ансамбль моделей был \textit{дистиллирован} в одну модель. Также в работе~\cite{Hinton2015} был проведен эксперимент по обучению экспертных моделей на основе одной большой модели.
+В работе~\cite{Hinton2015} Дж.\,Е. Хинтоном рассматривается метод дистилляции моделей машинного обучения для задачи классификации. В работе проведен ряд экспериментов, в которых проводилась дистилляции моделей для разных задач машинного обучения. Эксперимент на выборке MNIST~\cite{mnist}, в котором избыточно сложно нейросеть была дистиллирована в нейросеть меньшей сложности. Эксперимент по Speech Recognition, в котором ансамбль моделей был \textit{дистиллирован} в одну модель. Также в работе~\cite{Hinton2015} был проведен эксперимент по обучению экспертных моделей на основе одной большой модели.
 
 \begin{definition}
 Привилегированная информация~--- множество признаков, которые доступны только в момент выбора модели, но не в момент тестирования.
@@ -522,6 +528,7 @@ y'_i &= \begin{cases}
 \end{itemize}
 Результаты данной части эксперимента показаны в табл.~\ref{tb:ce:1}. В качестве модели учителя использовалась модель Bi-LSTM с~$170$ тысячами параметров для обучения. В качестве эмбедингов обучалась матрица из~$30$ миллионов параметров в единой процедуре с моделью BI-LSTM. Обученная модель предсказывает с точностью~$0{,}835$. В качестве модели ученика рассматривается модель с $1538$ параметрами, но в качестве эмбедингов рассматривается переобученная модель BERT.
 
+Программное обеспечение для проведения экспериментов и проверки результатов находится в~\cite{Code2020}.
 
 \section{Заключение}
 \begin{table}[]
@@ -554,35 +561,36 @@ y'_i &= \begin{cases}
 В дальнейшем предполагается обобщить метод максимального правдоподобия для дистилляции моделей используя Байесовский подход выбора моделей машинного обучения. Также в рамках байесовсокго подхода планируется улучшить методы для получения улучшения качества не только для задачи классификации, но и для задачи регрессии.
 
 \begin{thebibliography}{10}
-\bibitem{LeCun1989}
-	\textit{Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard and L. D. Jackel} Backpropagation Applied to Handwritten Zip Code Recognition // Neural Computation. 1989. Vol.1 No 4. pp. 541--551.
-\bibitem{Schmidhuber1997}
-	\textit{Sepp Hochreiter; Jürgen Schmidhuber} Long short-term memory // Neural Computation. 1997. Vol. 9, No 8.  pp. 1735--1780.
-\bibitem{Kaiming2015}
-	\textit{Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun} Deep Residual Learning for Image Recognition // CoRR. 2015
 \bibitem{Vaswani2017}
-	\textit{Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin} Attention Is All You Need // CoRR. 2017
+	\textit{Vaswani A., Shazeer N., Parmar N., Uszkoreit J., Jones L., Gomez A., Kaiser L., Polosukhin I.} Attention Is All You Need // In Advances in Neural Information Processing Systems. 2017. V. 5. P. 6000--6010.
 \bibitem{Devlin2018}
-	\textit{Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova} BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding // arXiv preprint arXiv:1810.04805. 2018
-\bibitem{Vapnik2015}
-	\textit{Vladimir Vapnik, Rauf Izmailov} Learning Using Privileged Information: Similarity Control and Knowledge Transfer // Journal of Machine Learning Research. 2015. No 16. pp. 2023--2049.
-\bibitem{Lopez2016}
-	\textit{David Lopez-Paz, Leon Bottou, Bernhard Scholkopf, Vladimir Vapnik} UNIFYING DISTILLATION
-AND PRIVILEGED INFORMATION // Published as a conference paper at ICLR. 2016.
-\bibitem{Hinton2015}
-        \textit{Geoffrey Hinton, Oriol Vinyals, jeff Dean} Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
-\bibitem{mnist}
-	\textit{LeCun Y.,  Cortes C., Burges C.} The MNIST dataset of handwritten digits, 1998. \text{http://yann.lecun.com/exdb/mnist/index.html}
-\bibitem{fashionmnist}
-	\textit{Han Xiao and Kashif Rasul and Roland Vollgraf} Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms // arXiv, 2017.
-\bibitem{kingma2014}
-	\textit{Diederik P. Kingma and Jimmy Ba} Adam: A Method for Stochastic Optimization // arXiv, 2014.
+	\textit{Devlin J., Chang M., Lee K., Toutanova K.} BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding // arXiv preprint arXiv:1810.04805. 2018.
+\bibitem{Kaiming2015}
+	\textit{He K., Zhang X., Ren S., Sun J.} Deep Residual Learning for Image Recognition // Proc. of the IEEE Conference on Computer Vision and Pattern Recognition. Las Vegas, 2016. P. 770--778.
 \bibitem{bachteev2018}
-	\textit{О.\,Ю. Бахтеев, В.\,В. Стрижов} Выбор моделей глубокого обучения субоптимальной сложности // Автоматика и телемеханика, 2018.
-\bibitem{twiter2013}
-	\textit{Theresa Wilson, Zornitsa Kozareva, Preslav Nakov, Sara Rosenthal, Veselin Stoyanov, and Alan Ritter} SemEval-2013 task 2: Sentiment analysis in twitter // In Proceedings of the International Workshop on Semantic Evaluation, SemEval ’13. 2013.
+	\textit{Бахтеев О.\,Ю., Стрижов В.\,В.} Выбор моделей глубокого обучения субоптимальной сложности // АиТ. 2018. № 8. С. 129--147.
+\bibitem{Hinton2015}
+        \textit{Hinton G., Vinyals O., Dean J.} Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
+\bibitem{mnist}
+	\textit{LeCun Y.,  Cortes C., Burges C.} The MNIST dataset of handwritten digits, 1998. \text{http://yann.lecun.com/exdb/mnist/index.html}.
+\bibitem{Vapnik2015}
+	\textit{Vapnik V., Izmailov R.} Learning Using Privileged Information: Similarity Control and Knowledge Transfer // Journal of Machine Learning Research. 2015. No 16. P. 2023--2049.
+\bibitem{Lopez2016}
+	\textit{Lopez-Paz D., Bottou L., Scholkopf B., Vapnik V.} Unifying Distillation and Privileged Information // In International Conference on Learning Representations. Puerto Rico, 2016.
 \bibitem{Ivakhnenko1994}
-	\textit{Madala, H. R. and Ivakhnenko, A. G.} Inductive Learning Algorithms for Complex Systems Modeling // CRC Press Inc., Boca Raton, 1994.
+	\textit{Madala H., Ivakhnenko A.} Inductive Learning Algorithms for Complex Systems Modeling. Boca Raton: CRC Press Inc., 1994.
+\bibitem{fashionmnist}
+	\textit{Xiao H., Rasul K.,Vollgraf R.} Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms // arXiv preprint arXiv:1708.07747. 2017.
+\bibitem{twiter2013}
+	\textit{Wilson T., Kozareva Z., Nakov P., Rosenthal S., Stoyanov V., Ritter A.} {S}em{E}val-2013 Task 2: Sentiment Analysis in Twitter // Proceedings of the Seventh International Workshop on Semantic Evaluation ({S}em{E}val 2013). Atlanta, 2013. P. 312--320.
+\bibitem{LeCun1989}
+	\textit{LeCun Y., Boser B., Denker J., Henderson D., Howard R., Hubbard W., Jackel L.} Backpropagation Applied to Handwritten Zip Code Recognition // Neural Computation. 1989. V. 1. No 4. P. 541--551.
+\bibitem{Schmidhuber1997}
+	\textit{Hochreiter S., Schmidhuber J.} Long short-term memory // Neural Computation. 1997. V. 9. No 8.  P. 1735--1780.
+\bibitem{kingma2014}
+	\textit{Kingma D, Ba J.} Adam: A Method for Stochastic Optimization // arXiv preprint arXiv:1412.6980. 2014.
+\bibitem{Code2020}
+	Код вычислительного эксперимента. URL: \url{https://github.com/andriygav/PrivilegeLearning}
  \end{thebibliography}
 
 
