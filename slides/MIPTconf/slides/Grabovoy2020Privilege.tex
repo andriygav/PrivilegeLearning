@@ -41,25 +41,24 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Вероятностная интерпретация дистилляции моделей}
 \justifying
-\textbf{Цель:} предложить вероятностную постановку задачи дистилляции моделей глубокого обучения на основе существующих методов дистилляции и привилегированного обучения.
+\textbf{Цель}
+
+Предложить вероятностную постановку задачи дистилляции моделей глубокого обучения. Развить существующие методы дистилляции и привилегированного обучения. В качестве базовой дистилляции предлагается использовать методы предложенные Дж. Хинтоном (2015) и В.Н. Вапником (2016).
 
 ~\\
 \textbf{Задачи}
 
 \begin{enumerate}
 \justifying
-	\item Поставить вероятностную задачу дистилляции для задачи классификации и регрессии.
+	\item Поставить вероятностную задачу дистилляции для задач классификации и регрессии.
 	\item Провести теоретический анализ предложенной вероятностной постановки задачи для линейных моделей.
 \end{enumerate}
 
 ~\\
-\textbf{Исследуемая проблема:} снижение размерности пространства параметров моделей глубокого обучения.
+\textbf{Исследуемая проблема}
 
-~\\
-\textbf{Метод решения}
+Снижение размерности пространства параметров моделей глубокого обучения.
 
-	Предлагается поставить вероятностную постановку задачи дистилляции моделей глубокого обучения. В качестве базовой дистилляции предлагается использовать методы предложенные Дж. Хинтоном (2015г) и В. Вапником (2016г).
-	
 \end{frame}
 
 %----------------------------------------------------------------------------------------------------------
@@ -91,25 +90,25 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Постановка задачи обучения с учителем}
 \justifying
-Признаки~$\mathbf{x}_i = \varphi(\omega_i),$ где $\mathbf{x}_i \in \mathbb{R}^{n}$.
-
-Привилегированные признаки~$\mathbf{x}^*_i \in \mathbb{R}^{n^*}.$
-
-Целевая переменная~$y_i \in \mathbb{Y}$.
-
-Индексы объектов, для которых известна привилегированная информация обозначим $\mathcal{I},$ а $\bar{\mathcal{I}}$ для которых не известная.
+Заданы:
+\begin{enumerate}
+    \item[1)] признаки~$\mathbf{x}_i \in \mathbb{R}^{n}$;
+    \item[2)] привилегированные признаки~$\mathbf{x}^*_i \in \mathbb{R}^{n^*}$;
+    \item[3)] целевая переменная~$y_i \in \mathbb{Y}$;
+    \item[4)] индексы объектов, для которых известна привилегированная информация обозначим $\mathcal{I},$ а $\bar{\mathcal{I}}$ для которых она не известна.
+\end{enumerate}
 
 \bigskip
 
-Функции учителя~$\mathbf{f}:\mathbb{R}^{n^*} \to \mathbb{Y}^*$ и ученика~$\mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^*$ --- пространство оценок.
+Функции учителя~$\mathbf{f}:\mathbb{R}^{n^*} \to \mathbb{Y}^\prime$ и ученика~$\mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^\prime$ --- пространство оценок.
 
-Ответ функции $\mathbf{f}$ для объекта~$\mathbf{x}^*_i$ обозначим~$\mathbf{s}_i = \mathbf{f}\bigr(\mathbf{x}_i^*\bigr)$.
+Ответ $\mathbf{s}_i = \mathbf{f}\bigr(\mathbf{x}_i^*\bigr)$ функции $\mathbf{f}$ для объекта~$\mathbf{x}^*_i$ используется при выборе модели ученика.
 
 \bigskip
 
 Требуется выбрать модель ученика~$\mathbf{g}$ из множества
 \[
-	\mathfrak{G} = \left\{\mathbf{g}| \mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^*\right\}.
+	\mathfrak{G} = \left\{\mathbf{g}| \mathbf{g}:\mathbb{R}^{n} \to \mathbb{Y}^\prime\right\}.
 \]
 
 Оптимизационная задача:
@@ -121,15 +120,15 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Постановка задачи: дистилляция Хинтона}
 \justifying
+Заданы:
 \begin{enumerate}
-	\item[1)] $\mathcal{I} = \{1, 2, \cdots, m\}$;
-	\item[2)] для всех $i \in \mathcal{I}$ выполняется $\mathbf{x}_i = \mathbf{x}^*_i$;
-	\item[3)] выборка $\mathfrak{D} = \{\left(\mathbf{x}_i, y_i\right)\}_{i=1}^{m}, \quad \mathbf{x}_i \in \mathbb{R}^{n}, \quad y_i \in \mathbb{Y}=\{1, \cdots, K\}$.
+	\item[1)] $\mathbf{x}_i = \mathbf{x}^*_i$ для всех $i$;
+	\item[2)] $y_i \in \mathbb{Y}=\{1, \cdots, K\}, \quad \mathbb{Y}^\prime=\mathbb{R}^{K}$.
 \end{enumerate}
 
 \bigskip
 
-Параметрическое семейство учителя и ученика:
+Параметрические семейства учителя и ученика:
 \[
 \setlength\abovedisplayskip{0pt}
 \mathfrak{F}_{\text{cl}} = \left\{\mathbf{f}| \mathbf{f} = \text{softmax}\bigr(\mathbf{v}\bigr(\mathbf{x}\bigr)/T\bigr), \quad \mathbf{v}: \mathbb{R}^n \to \mathbb{R}^K \right\},
@@ -144,7 +143,7 @@
 
 \bigskip
 
-Функция ошибки~$\mathcal{L}_\text{st}$:
+Функция ошибки
 \[
 \setlength\abovedisplayskip{0pt}
 \begin{aligned}
@@ -152,7 +151,7 @@
 \end{aligned}
 \setlength\belowdisplayskip{0pt}
 \]
-где~$\cdot\bigr|_{T=t}$ обозначает, что параметр температуры~$T$ в предыдущей функции равняется~$t$.
+где~$\cdot\bigr|_{T=t}$ параметр температуры~$T$ равняется~$t$.
 
 \bigskip
 
@@ -166,11 +165,10 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Постановка задачи: дистилляция Вапника}
 \justifying
-Задано:
+Заданы:
 \begin{enumerate}
 	\item[1)] $\mathcal{I} = \{1, 2, \cdots, m\}$;
-	\item[2)] для всех $i \in \mathcal{I}$ выполняется $\mathbf{x}_i \not= \mathbf{x}^*_i$;
-	\item[3)] выборка $\mathcal{D} = \left\{\left(\mathbf{x}_i, \mathbf{x}^*_i, y_i\right)\right\}_{i=1}^{m}, \mathbf{x}_i \in \mathbb{R}^{n}, \mathbf{x}^*_i \in \mathbb{R}^{n^*}, y_i \in \{1, \cdots, K\}$.
+	\item[2)] $y_i \in \mathbb{Y}=\{1, \cdots, K\}, \quad \mathbb{Y}^\prime=\mathbb{R}^{K}$.
 \end{enumerate}
 
 \bigskip
@@ -193,7 +191,7 @@
 \end{aligned}
 \setlength\belowdisplayskip{0pt}
 \]
-где~$\cdot\bigr|_{T=t}$ обозначает, что параметр температуры~$T$ в предыдущей функции равняется~$t$.
+где~$\cdot\bigr|_{T=t}$ параметр температуры~$T$ равняется~$t$.
 
 \bigskip
 
@@ -226,27 +224,27 @@ p\bigr(\mathbf{y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i
 \mathbf{g} = \arg\max_{\mathbf{g} \in \mathfrak{G}} p\bigr(\mathbf{y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr),
 \setlength\belowdisplayskip{0pt}
 \]
-данная задача оптимизации переписывается в следующем виде:
+имеет вид:
 \[
 \setlength\abovedisplayskip{0pt}
 \begin{aligned}
-\hat{\mathbf{g}} = \arg\max_{\mathbf{g}\in \mathfrak{G}} \sum_{i\not\in \mathcal{I}}\log p\bigr(y_i|\mathbf{x}_i, \mathbf{g}\bigr) &+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\log p\bigr(y_i|\mathbf{x}_i, \mathbf{g}\bigr) \\
+\sum_{i\not\in \mathcal{I}}\log p\bigr(y_i|\mathbf{x}_i, \mathbf{g}\bigr) &+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\log p\bigr(y_i|\mathbf{x}_i, \mathbf{g}\bigr) \\
 &+ \lambda\sum_{i\in \mathcal{I}}\log p\bigr(\mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr),
 \end{aligned}
 \setlength\belowdisplayskip{0pt}
 \]
-где~$\lambda \in [0,1]$ --- мета-параметр для взвешивания слагаемых отвечающих модели учителя относительно истинных меток.
+где~$\lambda \in [0,1]$ --- метапараметр.
 
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Частный случай: задача классификации}
 \justifying
+Заданы:
 \begin{enumerate}
-	\item[1)] функции учителя $\mathbf{f}\in\mathfrak{F}_{\text{cl}}^{*}$ и ученика $\mathbf{g}\in\mathfrak{G}_{\text{cl}}$;
+	\item[1)] учитель $\mathbf{f}\in\mathfrak{F}_{\text{cl}}^{*}$ и ученик~$\mathbf{g}\in\mathfrak{G}_{\text{cl}}$;
 	\item[2)] распределение истинных меток~$p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$;
-	\item[3)] распределение меток учителя~$p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) = C\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k}.$
+	\item[3)] распределение ответов учителя~$p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) = C\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k}, \quad C < \infty.$
 \end{enumerate}
-Оптимизационная задача:
 \[
 \setlength\abovedisplayskip{0pt}
 \begin{aligned}
@@ -260,7 +258,7 @@ p\bigr(\mathbf{y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i
 
 \begin{rustheorem}[Грабовой, 2020]
 \label{theorem:st:dist}
-Пусть вероятность каждого класса отделима от нуля и единицы, то есть для всех $k$ выполняется $1 > 1- \varepsilon > g_k\bigr(\mathbf{x}\bigr) > \varepsilon > 0,$ тогда при
+Пусть всех $k$ выполняется $1 > 1- \varepsilon > g_k\bigr(\mathbf{x}\bigr) > \varepsilon > 0,$ тогда при
 \[
 \setlength\abovedisplayskip{0pt}
 C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)\log g_k\bigr(\mathbf{x}\bigr)
@@ -274,24 +272,24 @@ C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf
 \begin{frame}{Частный случай: задача регрессии}
 \justifying
 \begin{enumerate}
-	\item[1)] учитель~$\mathbf{f}\in\mathfrak{F}_{\text{rg}}^{*}= \left\{\mathbf{f}| \mathbf{f} = \mathbf{v}^*\bigr(\mathbf{x}^*\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R} \right\}$;
-	\item[2)] ученик~$\mathbf{g}\in\mathfrak{G}_{\text{rg}} = \left\{\mathbf{g}| \mathbf{g} = \mathbf{z}\bigr(\mathbf{x}\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R} \right\}$;
-	\item[3)] распределение истинных меток $p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(y|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma\bigr)$;
-	\item[4)] распределения меток учителя $p\bigr(s| \mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(s|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma_s\bigr).$
+	\item[1)] учитель~$f\in\mathfrak{F}_{\text{rg}}^{*}= \left\{f| f = \mathbf{v}^*\bigr(\mathbf{x}^*\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R} \right\}$;
+	\item[2)] ученик~$g\in\mathfrak{G}_{\text{rg}} = \left\{g| g = \mathbf{z}\bigr(\mathbf{x}\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R} \right\}$;
+	\item[3)] распределение истинных меток $p\bigr(y|\mathbf{x}, g\bigr) = \mathcal{N}\bigr(y|g\bigr(x\bigr), \sigma\bigr)$;
+	\item[4)] распределения меток учителя $p\bigr(s| \mathbf{x}, g\bigr) = \mathcal{N}\bigr(s|g\bigr(\mathbf{x}\bigr), \sigma_s\bigr).$
 \end{enumerate}
 Оптимизационная задача:
 \[
 \setlength\abovedisplayskip{0pt}
 \begin{aligned}
-\hat{g} = \arg\min_{g\in \mathfrak{G}} & \sum_{i\not\in \mathcal{I}}\sigma^2\left(y_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2 \\
-&+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\sigma^2\left(y_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2 + \lambda\sum_{i\in \mathcal{I}}\sigma_s^2\left(s_i-\mathbf{g}\bigr(\mathbf{x}_i\bigr)\right)^2.
+\hat{g} = \arg\min_{g\in \mathfrak{G}} & \sum_{i\not\in \mathcal{I}}\sigma^2\left(y_i-g\bigr(\mathbf{x}_i\bigr)\right)^2 \\
+&+ \left(1-\lambda\right)\sum_{i\in \mathcal{I}}\sigma^2\left(y_i-g\bigr(\mathbf{x}_i\bigr)\right)^2 + \lambda\sum_{i\in \mathcal{I}}\sigma_s^2\left(s_i-g\bigr(\mathbf{x}_i\bigr)\right)^2.
 \end{aligned}
 \setlength\belowdisplayskip{0pt}
 \]
 
 \begin{rustheorem}[Грабовой, 2020]
 \label{theorem:st:reg}
-Пусть~$\mathfrak{G}_{rg}$ --- класс линейных функций~$\mathbf{g}\bigr(\mathbf{x}\bigr) = \mathbf{w}^{\mathsf{T}}\mathbf{x}.$ Тогда решение оптимизационной задачи эквивалентно решению задачи линейной регрессии $\mathbf{y''} = \mathbf{X}\mathbf{w} + \bm{\varepsilon},~\bm{\varepsilon} \sim \mathcal{N}\bigr(\mathbf{0}, \bm{\Sigma}\bigr)$ ,
+Пусть~$\mathfrak{G}_{rg}$ --- класс линейных функций~$g\bigr(\mathbf{x}\bigr) = \mathbf{w}^{\mathsf{T}}\mathbf{x}.$ Тогда решение оптимизационной задачи эквивалентно решению задачи линейной регрессии $\mathbf{y''} = \mathbf{X}\mathbf{w} + \bm{\varepsilon},~\bm{\varepsilon} \sim \mathcal{N}\bigr(\mathbf{0}, \bm{\Sigma}\bigr)$ ,
 где $\bm{\Sigma}^{-1}=\text{diag}\bigr(\bm{\sigma'}\bigr)$ и $\mathbf{y''}$ имеют следующий вид:
 \[
 \setlength\abovedisplayskip{0pt}
@@ -373,7 +371,7 @@ y'_i = \begin{cases}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 
-\begin{frame}{Синтетический эксперимент: анализ параметра $\lambda$ и $T$}
+\begin{frame}{Синтетический эксперимент: анализ параметров $\lambda$ и $T$}
 \justifying
 \begin{center}
 {\center
@@ -470,7 +468,7 @@ y'_i = \begin{cases}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 
-\begin{frame}{Публикации по теме}
+\begin{frame}{Публикации ВАК по теме}
 \justifying
 \begin{enumerate}
 \item \textit{Грабовой А.В., Бахтеев О.Ю., Стрижов В.В.} Определение релевантности параметров нейросети // Информатика и ее применения, 2019, 13(2).
@@ -479,7 +477,7 @@ y'_i = \begin{cases}
 \item \textit{Грабовой А.В., Стрижов В.В.} Анализ выбора априорного распределения для смеси экспертов // Журнал Вычислительной математики и математической физики, 2021. 61(5).
 \item \textit{Грабовой А.В., Стрижов В.В.} Анализ моделей привилегированного обучения и дистилляции // Автоматика и телемеханика, 2021 (текущая работа, на рецензировании).
 \item \textit{T. Gadaev, A. Grabovoy, A. Motrenko, V. Strijov} Numerical methods of minimum sufficient sample size estimation for linear models // in progress.
-\item \textit{Базарова А.И., Грабовой А.В., Стрижов В.В.} Анализ свойств вероятностных моделей в задачах обучения с экспертом // в разработке.
+\item \textit{Базарова А.И., Грабовой А.В., Стрижов В.В.} Анализ свойств вероятностных моделей в задачах обучения с экспертом // подано.
 \end{enumerate}
 
 \end{frame}
