@@ -16,6 +16,7 @@
 \usepackage{multirow}
 \usepackage{ragged2e}
 \usepackage{indentfirst}
+\usepackage{multicol}
 
 \newtheorem{rustheorem}{Теорема}
 
@@ -218,6 +219,9 @@
 p\bigr(\mathbf{y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i\not\in \mathcal{I}}p\bigr(y_i|\mathbf{x}_i, \mathbf{g}\bigr)\prod_{i\in \mathcal{I}}p\bigr(y_i, \mathbf{s}_i|\mathbf{x}_i, \mathbf{g}\bigr).
 \setlength\belowdisplayskip{0pt}
 \]
+
+\begin{columns}
+\column{0.55\textwidth}
 Задача оптимизации:
 \[
 \setlength\abovedisplayskip{0pt}
@@ -234,6 +238,9 @@ p\bigr(\mathbf{y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i
 \setlength\belowdisplayskip{0pt}
 \]
 где~$\lambda \in [0,1]$ --- метапараметр.
+\column{0.4\textwidth}
+\includegraphics[width=\textwidth]{figures/proba_model}
+\end{columns}
 
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
