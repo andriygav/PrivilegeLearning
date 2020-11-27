@@ -25,6 +25,25 @@
 
 \begin{document}
 
+\beginpgfgraphicnamed{proba_model}
+  \tikz{
+    % nodes
+     \node[obs] (y) {$y_i$};%
+     \node[det, left=of y] (g) {$\mathbf{g}$}; %
+     
+     \node[obs, below=of g] (s) {$\mathbf{s}_i$};%
+     
+     \node[obs, left=of g] (x) {$\mathbf{x}_i$};%
+    % plates
+     \plate {xy} {(x) (y) (g)} {$m$}; %
+     \plate {xs} {(x) (s) (g)} {$m^*$}; %
+    % edges
+    \edge[-] {x} {g} ;
+    \edge {g} {y} ; %
+    \edge {g} {s} ; %
+ }
+\endpgfgraphicnamed
+
 \beginpgfgraphicnamed{general_model}
   \tikz{
     % nodes
