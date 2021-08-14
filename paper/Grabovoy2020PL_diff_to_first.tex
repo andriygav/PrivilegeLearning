@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL Grabovoy2020PL_first.tex   Sat Aug 14 12:55:14 2021
-%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 16:23:49 2021
+%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 16:53:30 2021
 %%  Sample document for preparing papers to  "Avtomatika i Telemekhanika"
 %%  charset=utf-8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -763,18 +763,17 @@ y'_i &= \begin{cases}
 \DIFdelendFL \DIFaddbeginFL \resizebox{\textwidth}{!}{
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{Выборка} & Модель      & \begin{tabular}[c]{@{}c@{}}Кросс-Энтропийная\\ ошибка\end{tabular} & \begin{tabular}[c]{@{}c@{}}Кросс-Энтропийная \\ ошибка с реальными\\ вероятностями\end{tabular} & \begin{tabular}[c]{@{}c@{}}Вероятностная\\ разница~\eqref{eq:ce:2}\end{tabular} & Точность            & \begin{tabular}[c]{@{}c@{}}Число\\ Параметров\end{tabular} \\ \hline
-\multirow{2}{*}{FashionMnist} & с учителем  & $0{,}461\pm0{,}005$                                                & -                                                                                             & $0{,}84\pm0{,}13$                                               & $0{,}842\pm0{,}002$ & 7850                                                       \\ \cline{2-7} 
-                              & без учителя & $0{,}453\pm0{,}003$                                                & -                                                                                             & $0{,}86\pm0{,}18$                                               & $0{,}841\pm0{,}002$ & 7850                                                       \\ \hline
-\multirow{2}{*}{Systetic}     & с учителем  & $0{,}225\pm0{,}002$                                                & $1{,}17\pm0{,}05$                                                                             & $0{,}45\pm0{,}20$                                               & $0{,}831\pm0{,}002$ & 33                                                         \\ \cline{2-7} 
-                              & без учителя & $0{,}452\pm0{,}001$                                                & $2{,}64\pm0{,}02$                                                                             & $0{,}75\pm0{,}22$                                               & $0{,}828\pm0{,}001$ & 33                                                         \\ \hline
+\multicolumn{1}{|c|}{Выборка} & Модель      & \begin{tabular}[c]{@{}c@{}}Кросс-Энтропийная\\ ошибка\end{tabular} & \begin{tabular}[c]{@{}c@{}}Кросс-Энтропийная \\ ошибка с реальными\\ вероятностями\end{tabular} & \begin{tabular}[c]{@{}c@{}}Вероятностная\\ разница\end{tabular} & Точность            & \begin{tabular}[c]{@{}c@{}}Число\\ Параметров\end{tabular} \\ \hline\hline
+\multirow{2}{*}{FashionMnist} & с учителем  & $0{,}453\pm0{,}003$                                                & -                                                                                             & $0{,}84\pm0{,}13$                                               & $0{,}842\pm0{,}002$ & 7850                                                       \\ \cline{2-7} 
+                              & без учителя & $0{,}461\pm0{,}005$                                                & -                                                                                             & $0{,}86\pm0{,}18$                                               & $0{,}841\pm0{,}002$ & 7850                                                       \\ \hline \hline
+\multirow{2}{*}{Systetic}     & с учителем  & $0{,}618\pm0{,}001$                                                & $1{,}17\pm0{,}05$                                                                             & $0{,}45\pm0{,}20$                                               & $0{,}828\pm0{,}002$ & 33                                                         \\ \cline{2-7} 
+                              & без учителя & $0{,}422\pm0{,}002$                                                & $2{,}64\pm0{,}02$                                                                             & $0{,}75\pm0{,}22$                                               & $0{,}831\pm0{,}001$ & 33                                                         \\ \hline \hline
 \multirow{2}{*}{Twiter}       & с учителем  & $0{,}501\pm0{,}006$                                                & -                                                                                             & $0{,}79\pm0{,}17$                                               & $0{,}764\pm0{,}005$ & 1538                                                       \\ \cline{2-7} 
-                              & без учителя & $0{,}489\pm0{,}003$                                                & -                                                                                             & $0{,}83\pm0{,}22$                                               & $0{,}747\pm0{,}004$ & 1538                                                       \\ \hline
+                              & без учителя & $0{,}489\pm0{,}003$                                                & -                                                                                             & $0{,}83\pm0{,}22$                                               & $0{,}747\pm0{,}004$ & 1538                                                       \\ \hline 
 \end{tabular}
 }
 \DIFaddendFL \end{center}
 \end{table}
-
 
 
 В данной работе проанализирована задача обучения модели ученика с помощью модели учителя.
