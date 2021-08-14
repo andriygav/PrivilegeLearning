@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL Grabovoy2020PL_first.tex   Sat Aug 14 12:55:14 2021
-%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 12:55:14 2021
+%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 15:57:14 2021
 %%  Sample document for preparing papers to  "Avtomatika i Telemekhanika"
 %%  charset=utf-8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -95,7 +95,7 @@
 \begin{document}  %%%!!!
 
 \year{2020}
-\title{Анализ моделей привилегированного обучения и дистилляции}%
+\title{\DIFdelbegin \DIFdel{Анализ моделей привилегированного обучения и }\DIFdelend \DIFaddbegin \DIFadd{Вероятностный интерпретации задачи }\DIFaddend дистилляции}%
 \DIFdelbegin %DIFDELCMD < \thanks{Работа выполнена при поддержке \dots
 %DIFDELCMD < (грант \mbox{№\,\dots}).}
 %DIFDELCMD < %%%
@@ -132,8 +132,22 @@
 Дистилляция модели~--- \DIFdelbegin \DIFdel{уменьшение }\DIFdelend \DIFaddbegin \DIFadd{снижение ее }\DIFaddend сложности \DIFdelbegin \DIFdel{модели }\DIFdelend путем выбора \DIFdelbegin \DIFdel{модели }\DIFdelend в множестве более простых моделей с использованием ответов более сложной модели.
 \end{definition}
 
-В работе~\cite{Hinton2015} Дж.\,Е. Хинтоном рассматривается метод дистилляции моделей машинного обучения для задачи классификации. В работе проведен ряд экспериментов \DIFdelbegin \DIFdel{, в которых проводилась }\DIFdelend \DIFaddbegin \DIFadd{по }\DIFaddend дистилляции моделей для разных задач машинного обучения\DIFdelbegin \DIFdel{. Эксперимент }\DIFdelend \DIFaddbegin \DIFadd{: эксперимент }\DIFaddend на выборке MNIST~\cite{mnist}, в котором \DIFdelbegin \DIFdel{избыточно сложно }\DIFdelend нейросеть \DIFaddbegin \DIFadd{избыточной сложности }\DIFaddend была дистиллирована в нейросеть меньшей сложности\DIFdelbegin \DIFdel{. Эксперимент }\DIFdelend \DIFaddbegin \DIFadd{, и эксперимент }\DIFaddend по \DIFdelbegin \DIFdel{Speech Recognition}\DIFdelend \DIFaddbegin \DIFadd{распознаванию речи}\DIFaddend , в котором ансамбль моделей был \DIFdelbegin \textit{\DIFdel{дистиллирован}} %DIFAUXCMD
-\DIFdelend \DIFaddbegin {\DIFadd{дистиллирован}} \DIFaddend в одну модель. Также в работе~\cite{Hinton2015} был проведен эксперимент по обучению экспертных моделей на основе одной большой модели.
+\DIFaddbegin \DIFadd{Основным подходом дистилляции модели учителя в модель ученика является метод основанный на использовании ответов модели учителя при оптимизации модели ученика~\mbox{%DIFAUXCMD
+\cite{Hinton2015, Bucilu2006, Lopez2016, Tang2016, Tzeng2015, Ahn2019}}\hspace{0pt}%DIFAUXCMD
+. Первые работы по генерации псевдометок рассматривались для пополнения редких классов на основе предобученной модели~\mbox{%DIFAUXCMD
+\cite{Bucilu2006}}\hspace{0pt}%DIFAUXCMD
+, который позвляет искусственно увеличить объем обучающей выборке. }\DIFaddend В работе~\cite{Hinton2015} \DIFdelbegin \DIFdel{Дж.\,Е. Хинтоном рассматривается }\DIFdelend \DIFaddbegin \DIFadd{предложен }\DIFaddend метод \DIFdelbegin \DIFdel{дистилляции моделей машинного обучения для задачи классификации}\DIFdelend \DIFaddbegin \DIFadd{в рамках которого моделью учителя генерируются новые метки объектов, которые соответствуют вероятностям классов с неким параметром температуры, который позволяет увеличивать или уменьшать дисперсию в полученных ответах учителя}\DIFaddend . В работе проведен ряд экспериментов \DIFdelbegin \DIFdel{, в которых проводилась }\DIFdelend \DIFaddbegin \DIFadd{по }\DIFaddend дистилляции моделей для разных задач машинного обучения\DIFdelbegin \DIFdel{. Эксперимент }\DIFdelend \DIFaddbegin \DIFadd{: эксперимент }\DIFaddend на выборке MNIST~\cite{mnist}, в котором \DIFdelbegin \DIFdel{избыточно сложно }\DIFdelend нейросеть \DIFaddbegin \DIFadd{избыточной сложности }\DIFaddend была дистиллирована в нейросеть меньшей сложности\DIFdelbegin \DIFdel{. Эксперимент }\DIFdelend \DIFaddbegin \DIFadd{, и эксперимент }\DIFaddend по \DIFdelbegin \DIFdel{Speech Recognition}\DIFdelend \DIFaddbegin \DIFadd{распознаванию речи}\DIFaddend , в котором ансамбль моделей был \DIFdelbegin \textit{\DIFdel{дистиллирован}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin {\DIFadd{дистиллирован}} \DIFaddend в одну модель. Также в работе~\cite{Hinton2015} был проведен эксперимент по обучению экспертных моделей на основе одной большой модели. \DIFaddbegin \DIFadd{В работе~\mbox{%DIFAUXCMD
+\cite{Tang2016} }\hspace{0pt}%DIFAUXCMD
+предложено добавить к новым вероятностным меткам предложенных Дж. Хинтоном метки классов, которые соответствуют предсказанному классу модели учителя.
+Различные подходы к дистилляции рассматривают значение на промежуточных слоях модели учителя~\mbox{%DIFAUXCMD
+\cite{Ziqing2020, Zehao2017, Wang2020}}\hspace{0pt}%DIFAUXCMD
+. В работах~\mbox{%DIFAUXCMD
+\cite{Ziqing2020, Wang2020} }\hspace{0pt}%DIFAUXCMD
+обучение происходит при помощи введения дополнительных матриц, которые выравнивают размеры промежуточных слоев модели учители и ученика. В работе~\mbox{%DIFAUXCMD
+\cite{Zehao2017} }\hspace{0pt}%DIFAUXCMD
+предложен метод передачи селективности нейронов, который основанный на минимизации максимального среднего отклонения между выходами всех слоев модели учителя и ученика.
+}\DIFaddend 
 
 \begin{definition}
 Привилегированная информация~--- множество признаков, которые доступны только в момент выбора модели, но не в момент тестирования.
@@ -155,10 +169,14 @@
 Ученик~--- модель, которая выбирается согласно \DIFdelbegin \DIFdel{какого-либо критерия}\DIFdelend \DIFaddbegin \DIFadd{заданному критерию}\DIFaddend .
 \end{definition}
 
-\DIFdelbegin \DIFdel{В данной работе предлагается рассмотреть }\DIFdelend \DIFaddbegin \DIFadd{Данная работа рассматривает }\DIFaddend вероятностный подход к решению задачи дистилляции модели и задачи привилегированного обучения. Подход обобщается на случай, когда привилегированная информация доступна не для всех объектов \DIFdelbegin \DIFdel{из }\DIFdelend обучающей выборки. В рамках вероятностного подхода предлагается анализ и обобщение функции ошибки~\cite{Hinton2015, Lopez2016}. Рассматриваются \DIFdelbegin \DIFdel{частные }\DIFdelend задачи классификации и регрессии~\cite{Ivakhnenko1994}. \DIFdelbegin %DIFDELCMD < 
+\DIFdelbegin \DIFdel{В данной работе предлагается рассмотреть вероятностный подход к решению задачи }\DIFdelend \DIFaddbegin \DIFadd{Данная работа посвящена вероятностной интерпретации методов }\DIFaddend дистилляции \DIFdelbegin \DIFdel{модели }\DIFdelend \DIFaddbegin \DIFadd{предложенных Дж. Хинтоном~\mbox{%DIFAUXCMD
+\cite{Hinton2015} }\hspace{0pt}%DIFAUXCMD
+}\DIFaddend и \DIFdelbegin \DIFdel{задачи привилегированного обучения.Подход обобщается на случай, когда привилегированная информация доступна не для всех объектов из обучающей выборки.}\DIFdelend \DIFaddbegin \DIFadd{В.\,Н.\,Вапника~\mbox{%DIFAUXCMD
+\cite{Vapnik2015}}\hspace{0pt}%DIFAUXCMD
+. }\DIFaddend В рамках вероятностного \DIFdelbegin \DIFdel{подхода }\DIFdelend \DIFaddbegin \DIFadd{анализа }\DIFaddend предлагается анализ и обобщение функции ошибки~\cite{Hinton2015, Lopez2016}. Рассматриваются \DIFdelbegin \DIFdel{частные }\DIFdelend задачи классификации и регрессии~\cite{Ivakhnenko1994}. \DIFdelbegin %DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdel{В рамках вычислительного эксперимента анализируются методы использующие и не использующие }\DIFdelend \DIFaddbegin \DIFadd{Вычислительный эксперимент обучает }\DIFaddend модель \DIFdelbegin \DIFdel{учителя при обучение модели }\DIFdelend ученика \DIFaddbegin \DIFadd{и использованием модели учителя и без нее. Анализируются результаты эксперимента}\DIFaddend . Для анализа используются  \DIFdelbegin \DIFdel{реальные }\DIFdelend выборки \DIFdelbegin \DIFdel{для задачи }\DIFdelend \DIFaddbegin \DIFadd{задач }\DIFaddend классификации изображений FashionMNIST~\cite{fashionmnist} и \DIFdelbegin \DIFdel{для задачи }\DIFdelend классификации текстов Twitter Sentiment Analysis~\cite{twiter2013}. Выборка FashionMNIST \DIFdelbegin \DIFdel{использовалась }\DIFdelend \DIFaddbegin \DIFadd{используется }\DIFaddend вместо общепринятой выборки MNIST, так как последняя имеет приемлемое качество аппроксимации даже для линейного классификатора. Вычислительный эксперимент \DIFdelbegin \DIFdel{использует }\DIFdelend \DIFaddbegin \DIFadd{сравнивает различные }\DIFaddend модели\DIFdelbegin \DIFdel{разной сложности: линейная }\DIFdelend \DIFaddbegin \DIFadd{: линейную }\DIFaddend модель, \DIFdelbegin \DIFdel{полносвязная нейронная }\DIFdelend \DIFaddbegin \DIFadd{полносвязную нейронную }\DIFaddend сеть, \DIFdelbegin \DIFdel{сверточная нейронная }\DIFdelend \DIFaddbegin \DIFadd{сверточную нейронную }\DIFaddend сеть~\cite{LeCun1989}, модель\DIFaddbegin \DIFadd{~}\DIFaddend Bi-LSTM~\cite{Schmidhuber1997} и модель\DIFaddbegin \DIFadd{~}\DIFaddend BERT~\cite{Devlin2018}.
+\DIFdel{В рамках вычислительного эксперимента анализируются методы использующие и не использующие }\DIFdelend \DIFaddbegin \DIFadd{Вычислительный эксперимент обучает }\DIFaddend модель \DIFaddbegin \DIFadd{ученика с использованием модели }\DIFaddend учителя \DIFdelbegin \DIFdel{при обучение }\DIFdelend \DIFaddbegin \DIFadd{и без использования }\DIFaddend модели \DIFdelbegin \DIFdel{ученика. }\DIFdelend \DIFaddbegin \DIFadd{учителя. Анализируются результаты эксперимента. }\DIFaddend Для анализа используются  \DIFdelbegin \DIFdel{реальные }\DIFdelend выборки \DIFdelbegin \DIFdel{для задачи }\DIFdelend \DIFaddbegin \DIFadd{задач }\DIFaddend классификации изображений FashionMNIST~\cite{fashionmnist} и \DIFdelbegin \DIFdel{для задачи }\DIFdelend классификации текстов Twitter Sentiment Analysis~\cite{twiter2013}. Выборка FashionMNIST \DIFdelbegin \DIFdel{использовалась }\DIFdelend \DIFaddbegin \DIFadd{используется }\DIFaddend вместо \DIFdelbegin \DIFdel{общепринятой }\DIFdelend выборки MNIST, так как последняя имеет приемлемое качество аппроксимации даже для линейного классификатора. Вычислительный эксперимент \DIFdelbegin \DIFdel{использует }\DIFdelend \DIFaddbegin \DIFadd{рассматривает различные }\DIFaddend модели\DIFdelbegin \DIFdel{разной сложности: линейная }\DIFdelend \DIFaddbegin \DIFadd{: линейную }\DIFaddend модель, \DIFdelbegin \DIFdel{полносвязная нейронная }\DIFdelend \DIFaddbegin \DIFadd{полносвязную нейронную }\DIFaddend сеть, \DIFdelbegin \DIFdel{сверточная нейронная }\DIFdelend \DIFaddbegin \DIFadd{сверточную нейронную }\DIFaddend сеть~\cite{LeCun1989}, модель\DIFaddbegin \DIFadd{~}\DIFaddend Bi-LSTM~\cite{Schmidhuber1997} и модель\DIFaddbegin \DIFadd{~}\DIFaddend BERT~\cite{Devlin2018}.
 
 \section{Постановка задачи обучения с учителем}
 Задано множество объектов~$\bm{\Omega}$ и множество целевых переменных~$\mathbb{Y}$. Множество~$\mathbb{Y}=\{1,\cdots,K\}$ для задачи классификации, где~$K$\DIFaddbegin \DIFadd{~--- }\DIFaddend число классов, множество\DIFaddbegin \DIFadd{~}\DIFaddend $\mathbb{Y}=\mathbb{R}$ для задачи регрессии.
@@ -689,7 +707,7 @@ y'_i &= \begin{cases}
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin 
 
-\DIFaddend Результаты данной части эксперимента показаны в табл.~\ref{tb:ce:1}. В качестве модели учителя использовалась модель Bi-LSTM с~$170$ тысячами параметров для обучения. В качестве \DIFdelbegin \DIFdel{эмбедингов }\DIFdelend \DIFaddbegin \DIFadd{эмбеддингов }\DIFaddend обучалась матрица из~$30$ миллионов параметров в единой процедуре с моделью BI-LSTM. Обученная модель \DIFdelbegin \DIFdel{предсказывает с точностью}\DIFdelend \DIFaddbegin \DIFadd{учителя имеет точность предсказания}\DIFaddend ~$0{,}835$. В качестве модели ученика рассматривается модель с $1538$ параметрами, но в качестве \DIFdelbegin \DIFdel{эмбедингов }\DIFdelend \DIFaddbegin \DIFadd{эмбеддингов }\DIFaddend рассматривается переобученная модель BERT. \DIFaddbegin \DIFadd{В табл.~\ref{tb:ce:1} показано качество модели ученика с использованием предсказания модели учителя и без него.
+\DIFaddend Результаты данной части эксперимента показаны в табл.~\ref{tb:ce:1}. В качестве модели учителя использовалась модель Bi-LSTM с \DIFdelbegin \DIFdel{~$170$ тысячами параметров для обучения}\DIFdelend \DIFaddbegin \DIFadd{линейным слоем на выходе}\DIFaddend . В качестве \DIFdelbegin \DIFdel{эмбедингов }\DIFdelend \DIFaddbegin \DIFadd{векторного представления токенов }\DIFaddend обучалась матрица \DIFaddbegin \DIFadd{параметров в которой каждая строка соответствует токену }\DIFaddend из \DIFaddbegin \DIFadd{обучающей выборки. Суммарное число обучаемых параметров модели учителя составляет более}\DIFaddend ~$30$ миллионов\DIFdelbegin \DIFdel{параметров в единой процедуре с моделью BI-LSTM}\DIFdelend . Обученная модель \DIFdelbegin \DIFdel{предсказывает с точностью}\DIFdelend \DIFaddbegin \DIFadd{учителя имеет точность предсказания}\DIFaddend ~$0{,}835$. В качестве модели ученика рассматривается \DIFaddbegin \DIFadd{линейная }\DIFaddend модель с $1538$ параметрами, \DIFdelbegin \DIFdel{но }\DIFdelend \DIFaddbegin \DIFadd{где }\DIFaddend в качестве \DIFdelbegin \DIFdel{эмбедингов }\DIFdelend \DIFaddbegin \DIFadd{векторного представления предложения }\DIFaddend рассматривается \DIFdelbegin \DIFdel{переобученная модель BERT }\DIFdelend \DIFaddbegin \DIFadd{выход предобученной модели BERT с размерностью векторного пространства~$768$. Признаковое описания модели учителя и модели ученика различаются}\DIFaddend . \DIFaddbegin \DIFadd{Модель учителя в качестве признакового описания рассматривается исходные слова в предложении. Модель ученика в качестве признакового описания использует готовое векторное представление предложения, которое получено при помощи модели BERT. В табл.~\ref{tb:ce:1} показано качество модели ученика с использованием предсказания модели учителя и без него.
 }\DIFaddend 
 
 Программное обеспечение для проведения экспериментов и проверки результатов находится в~\cite{Code2020}.
@@ -771,7 +789,21 @@ y'_i &= \begin{cases}
 \DIFadd{В }\DIFaddend дальнейшем предполагается обобщить метод максимального правдоподобия для дистилляции моделей используя \DIFdelbegin \DIFdel{Байесовский }\DIFdelend \DIFaddbegin \DIFadd{байесовский }\DIFaddend подход выбора моделей машинного обучения. Также в рамках \DIFdelbegin \DIFdel{байесовсокго }\DIFdelend \DIFaddbegin \DIFadd{байесовского }\DIFaddend подхода планируется \DIFdelbegin \DIFdel{улучшить }\DIFdelend \DIFaddbegin \DIFadd{развить }\DIFaddend методы для \DIFdelbegin \DIFdel{получения улучшения }\DIFdelend \DIFaddbegin \DIFadd{повышения }\DIFaddend качества не только для задачи классификации, но и для задачи регрессии.
 
 \begin{thebibliography}{10}
-\bibitem{Vaswani2017}
+\DIFaddbegin \bibitem{Wang2020}
+    \textit{\DIFadd{Wang X., Fu T., Liao S., Wang S., Lei Z., Mei T.}} \DIFadd{Exclusivity-Consistency Regularized Knowledge Distillation for Face Recognition // Lecture Notes in Computer Science. 2020. V. 1 P. 23--69.
+}\bibitem{Zehao2017}
+	\textit{\DIFadd{Huang Z., Naiyan W.}} \DIFadd{Like What You Like: Knowledge Distill via Neuron Selectivity Transfer // arXiv:1707.01219. 2017.
+}\bibitem{Ziqing2020}
+    \textit{\DIFadd{Ziqing Y., Chen Y., Che Z., Liu W., Wang T., Guoping H.}} \DIFadd{TextBrewer: An Open-Source Knowledge Distillation Toolkit for Natural Language Processing // In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations, 2020.
+}\bibitem{Ahn2019}
+    \textit{\DIFadd{Ahn S., Hu S., Damianou A., Lawrence N., Dai Z.}} \DIFadd{Variational information distil- lation for knowledge transfer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2019. P. 9163--9171.
+}\bibitem{Tzeng2015}
+    \textit{\DIFadd{Tzeng E., Hoffman J., Darrell T., Saenko K.}} \DIFadd{Simultaneous deep transfer across domains and tasks. In Proceedings of the IEEE International Conference on Com- puter Vision. 2015. V. 2. P. 4068--4076.
+}\bibitem{Tang2016}
+    \textit{\DIFadd{Tang Z., Wang D., Zhang Z.}} \DIFadd{Recurrent neural network training with dark knowledge transfer // In Proceedings of the IEEE International Conference on Acous- tics, Speech and Signal Processing. 2016. V. 2. P. 5900--5904.
+}\bibitem{Bucilu2006}
+    \textit{\DIFadd{Bucilu C., Caruana R., Mizil A.}} \DIFadd{Model compression // In Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data mining. 2006. P. 535--541.
+}\DIFaddend \bibitem{Vaswani2017}
 	\textit{Vaswani A., Shazeer N., Parmar N., Uszkoreit J., Jones L., Gomez A., Kaiser L., Polosukhin I.} Attention Is All You Need // In Advances in Neural Information Processing Systems. 2017. V. 5. P. 6000--6010.
 \bibitem{Devlin2018}
 	\textit{Devlin J., Chang M., Lee K., Toutanova K.} BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding // arXiv preprint arXiv:1810.04805. 2018.
