@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL Grabovoy2020PL_first.tex   Sat Aug 14 12:55:14 2021
-%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 16:09:54 2021
+%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 16:20:32 2021
 %%  Sample document for preparing papers to  "Avtomatika i Telemekhanika"
 %%  charset=utf-8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -623,8 +623,10 @@ y'_i &= \begin{cases}
 
 На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс--энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика. На графике сравнивается \DIFdelbegin \DIFdel{моделя}\DIFdelend \DIFaddbegin \DIFadd{модель}\DIFaddend , которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. \DIFdelbegin \DIFdel{На графике }\DIFdelend \DIFaddbegin \DIFadd{Из графика }\DIFaddend видно, что обе модели начинают \DIFdelbegin \DIFdel{переобучатся }\DIFdelend \DIFaddbegin \DIFadd{переобучаться }\DIFaddend после 30-й итерации\DIFdelbegin \DIFdel{, но }\DIFdelend \DIFaddbegin \DIFadd{. Но }\DIFaddend модель, которая получена путем дистилляции\DIFdelbegin \DIFdel{переобувается }\DIFdelend \DIFaddbegin \DIFadd{, переобучается }\DIFaddend не так быстро\DIFdelbegin \DIFdel{, что следует из того, что }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
 
+\DIFaddbegin \DIFadd{В табл.~\ref{tb:ce:1} показано, что для выборки FashionMnist итоговые модели ученика с учителем и без учителя сравнимы по точности и кросс-энтропийной ошибке, если учитывать дисперсию этих величин.
+}
 
-\subsection{Синтетический эксперимент}
+\DIFaddend \subsection{Синтетический эксперимент}
 Проанализируем модель на синтетической выборке. Выборка \DIFdelbegin \DIFdel{построенная }\DIFdelend \DIFaddbegin \DIFadd{построена }\DIFaddend следующим образом:
 \begin{gather}
 \begin{aligned}
