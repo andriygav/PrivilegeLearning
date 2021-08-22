@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL Grabovoy2020PL_first.tex   Sat Aug 14 12:55:14 2021
-%DIF ADD Grabovoy2020PL.tex         Sat Aug 14 17:25:55 2021
+%DIF ADD Grabovoy2020PL.tex         Sun Aug 22 10:52:20 2021
 %%  Sample document for preparing papers to  "Avtomatika i Telemekhanika"
 %%  charset=utf-8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -314,7 +314,7 @@
     \item выбираем оптимальную модель ученика $\mathbf{g} \in \mathfrak{G}_{\text{cl}}$ используя дистилляцию~\cite{Hinton2015}. 
 \end{enumlist}
 
-Модель ученика \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует \eqref{eq:hinton:L:new}. Модель учителя \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует кросс-энтропийную \DIFdelbegin \DIFdel{функции }\DIFdelend \DIFaddbegin \DIFadd{функцию }\DIFaddend ошибки:
+Модель ученика \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует \eqref{eq:hinton:L:new}. Модель учителя \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует кросс--энтропийную \DIFdelbegin \DIFdel{функции }\DIFdelend \DIFaddbegin \DIFadd{функцию }\DIFaddend ошибки:
 \begin{gather}
 \label{eq:hinton.2}
 \DIFdelbegin %DIFDELCMD < \begin{aligned}
@@ -617,11 +617,11 @@ y'_i &= \begin{cases}
 
 \begin{figure}[h!t]\center
 \includegraphics[width=1\textwidth]{figures/mnist_loss}
-\caption{Зависимость \DIFdelbeginFL \DIFdelFL{кросс-этропии }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{кросс-энтропии }\DIFaddendFL между истинными метками и предсказанными учеников вероятностями классов: a) на обучающей выборке; b) на тестовой выборке.}
+\caption{Зависимость \DIFdelbeginFL \DIFdelFL{кросс--этропии }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{кросс-энтропии }\DIFaddendFL между истинными метками и предсказанными учеников вероятностями классов: a) на обучающей выборке; b) на тестовой выборке.}
 \label{fg:ex:fashionmnist:loss}
 \end{figure}
 
-На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс-энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика. На графике сравнивается \DIFdelbegin \DIFdel{моделя}\DIFdelend \DIFaddbegin \DIFadd{модель}\DIFaddend , которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. \DIFdelbegin \DIFdel{На графике }\DIFdelend \DIFaddbegin \DIFadd{Из графика }\DIFaddend видно, что обе модели начинают \DIFdelbegin \DIFdel{переобучатся }\DIFdelend \DIFaddbegin \DIFadd{переобучаться }\DIFaddend после 30-й итерации\DIFdelbegin \DIFdel{, но }\DIFdelend \DIFaddbegin \DIFadd{. Но }\DIFaddend модель, которая получена путем дистилляции\DIFdelbegin \DIFdel{переобувается }\DIFdelend \DIFaddbegin \DIFadd{, переобучается }\DIFaddend не так быстро\DIFdelbegin \DIFdel{, что следует из того, что }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
+На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс--энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика. На графике сравнивается \DIFdelbegin \DIFdel{моделя}\DIFdelend \DIFaddbegin \DIFadd{модель}\DIFaddend , которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. \DIFdelbegin \DIFdel{На графике }\DIFdelend \DIFaddbegin \DIFadd{Из графика }\DIFaddend видно, что обе модели начинают \DIFdelbegin \DIFdel{переобучатся }\DIFdelend \DIFaddbegin \DIFadd{переобучаться }\DIFaddend после 30-й итерации\DIFdelbegin \DIFdel{, но }\DIFdelend \DIFaddbegin \DIFadd{. Но }\DIFaddend модель, которая получена путем дистилляции\DIFdelbegin \DIFdel{переобувается }\DIFdelend \DIFaddbegin \DIFadd{, переобучается }\DIFaddend не так быстро\DIFdelbegin \DIFdel{, что следует из того, что }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
 
 \DIFaddbegin \DIFadd{В табл.~\ref{tb:ce:1} показано, что для выборки FashionMnist итоговые модели ученика с учителем и без учителя сравнимы по точности и кросс-энтропийной ошибке, если учитывать дисперсию этих величин.
 }
@@ -639,7 +639,7 @@ y'_i &= \begin{cases}
 На рис.~\ref{fg:ex:synt:distr:real} показано распределение по классам для\DIFdelbegin \DIFdel{каждого объекта }\DIFdelend \DIFaddbegin \DIFadd{~$20$ объектов из }\DIFaddend обучающей выборки. \DIFaddbegin \DIFadd{Каждому столбцу на графике соответствует объект, а каждой строке соответствует вероятность класса. }\DIFaddend Видно, что \DIFdelbegin \DIFdel{все классы являются равновероятными. }\DIFdelend \DIFaddbegin \DIFadd{для каждого рассмотренного объекта вероятности разных классов близки. Получается, что если в качестве истинных меток взять класс с максимальной вероятностью, то выборка будет сильно зашумленной и модель будет описывать эти данные некорректно.
 }\DIFaddend 
 
-Построим в качестве ученика \DIFdelbegin \DIFdel{простую }\DIFdelend линейную модель, которая минимизирует кросс-энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.
+Построим в качестве ученика \DIFdelbegin \DIFdel{простую }\DIFdelend линейную модель, которая минимизирует крос--энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.
 
 \begin{figure}[h!t]\center
 \includegraphics[width=0.35\textwidth]{figures/linear_model}
@@ -784,7 +784,7 @@ y'_i &= \begin{cases}
 
 Теорема~\ref{theorem:st:reg} показала, что \DIFdelbegin \DIFdel{обучения }\DIFdelend \DIFaddbegin \DIFadd{обучение }\DIFaddend линейной регрессии с учителем эквивалентно замене обучающей \DIFdelbegin \DIFdel{выборке }\DIFdelend \DIFaddbegin \DIFadd{выборки }\DIFaddend и вероятностных предположений о распределении истинных ответов. Для задачи классификации ответы учителя дают дополнительную информацию в виде распределения классов для каждого объекта из обучающей выборки. Данная информация не может быть переписана в виде \DIFdelbegin \DIFdel{классической }\DIFdelend задачи классификации. Для использования данной информации требуется использовать распределение, которое представлено в теореме~\ref{theorem:st:dist}.
 
-В вычислительном эксперименте \DIFdelbegin \DIFdel{сравнивается модель }\DIFdelend \DIFaddbegin \DIFadd{сравниваются модели }\DIFaddend ученика, \DIFdelbegin \DIFdel{которая обучена без использования учителя и }\DIFdelend \DIFaddbegin \DIFadd{которые обучены }\DIFaddend с использованием модели учителя \DIFaddbegin \DIFadd{и без  него}\DIFaddend . В таблице~\ref{tb:ce:1} показаны результаты вычислительного эксперимента для разных выборок. \DIFdelbegin \DIFdel{Из таблицы видно}\DIFdelend \DIFaddbegin \DIFadd{Показано}\DIFaddend , что точность аппроксимации выборки учеником улучшается при использовании модели учителя. \DIFdelbegin \DIFdel{Задачи }\DIFdelend \DIFaddbegin \DIFadd{Задача }\DIFaddend регрессии не приведена в вычислительном эксперименте, так как в теореме~\ref{theorem:st:reg} была показана \DIFaddbegin \DIFadd{ее }\DIFaddend эквивалентность \DIFdelbegin \DIFdel{классическому решению задачи }\DIFdelend \DIFaddbegin \DIFadd{задаче }\DIFaddend линейной регрессии. Для задачи классификации проведен вычислительный эксперимент. \DIFaddbegin \DIFadd{Из вычислительного эксперимента видно, что дистилляция влияет на распределение классов в рамках одного объекта. Вероятности классов для каждого объекта являются более разреженными, а не концентрируются в одном классе. Данное свойство хорошо видно в синтетической выборке, так как она генерировалась с максимальной дисперсией в вероятностях классов.
+В вычислительном эксперименте \DIFdelbegin \DIFdel{сравнивается модель }\DIFdelend \DIFaddbegin \DIFadd{сравниваются модели }\DIFaddend ученика, \DIFdelbegin \DIFdel{которая обучена без использования учителя и }\DIFdelend \DIFaddbegin \DIFadd{которые обучены }\DIFaddend с использованием модели учителя \DIFaddbegin \DIFadd{и бег него}\DIFaddend . В таблице~\ref{tb:ce:1} показаны результаты вычислительного эксперимента для разных выборок. \DIFdelbegin \DIFdel{Из таблицы видно}\DIFdelend \DIFaddbegin \DIFadd{Показано}\DIFaddend , что точность аппроксимации выборки учеником улучшается при использовании модели учителя. \DIFdelbegin \DIFdel{Задачи }\DIFdelend \DIFaddbegin \DIFadd{Задача }\DIFaddend регрессии не приведена в вычислительном эксперименте, так как в теореме~\ref{theorem:st:reg} была показана \DIFaddbegin \DIFadd{ее }\DIFaddend эквивалентность \DIFdelbegin \DIFdel{классическому решению задачи }\DIFdelend \DIFaddbegin \DIFadd{задаче }\DIFaddend линейной регрессии. Для задачи классификации проведен вычислительный эксперимент. \DIFaddbegin \DIFadd{Из вычислительного эксперимента видно, что дистилляция влияет на распределение классов в рамках одного объекта. Вероятности классов для каждого объекта являются более разреженными, а не концентрируются в одном классе. Данное свойство хорошо видно в синтетической выборке, так как она генерировалась с максимальной дисперсией в вероятностях классов.
 }\DIFaddend 
 
 \DIFaddbegin \DIFadd{Основным результатом данной работы является вероятностная интерпретация  задачи дистилляции. Рассмотрен частный случай, когда признаковое описание модели учителя и ученика совпадает. }\DIFaddend В \DIFaddbegin \DIFadd{рамках вычислительного эксперимента проведен анализ ответов модели ученика с использованием модели учителя и без нее. Из результатов эксперимента видно, что модель ученика наследует распределение вероятностей по классам от модели учителя. В случае, когда модель учителя адекватно описывает данные, описание данных моделью ученика также улучшается, что показано в вычислительном эксперимента на синтетических данных.
@@ -793,53 +793,61 @@ y'_i &= \begin{cases}
 \DIFadd{В }\DIFaddend дальнейшем предполагается обобщить метод максимального правдоподобия для дистилляции моделей используя \DIFdelbegin \DIFdel{Байесовский }\DIFdelend \DIFaddbegin \DIFadd{байесовский }\DIFaddend подход выбора моделей машинного обучения. Также в рамках \DIFdelbegin \DIFdel{байесовсокго }\DIFdelend \DIFaddbegin \DIFadd{байесовского }\DIFaddend подхода планируется \DIFdelbegin \DIFdel{улучшить }\DIFdelend \DIFaddbegin \DIFadd{развить }\DIFaddend методы для \DIFdelbegin \DIFdel{получения улучшения }\DIFdelend \DIFaddbegin \DIFadd{повышения }\DIFaddend качества не только для задачи классификации, но и для задачи регрессии.
 
 \begin{thebibliography}{10}
-\DIFaddbegin \bibitem{Wang2020}
-    \textit{\DIFadd{Wang X., Fu T., Liao S., Wang S., Lei Z., Mei T.}} \DIFadd{Exclusivity-Consistency Regularized Knowledge Distillation for Face Recognition // Lecture Notes in Computer Science. 2020. V. 1 P. 23--69.
+\bibitem{Vaswani2017}
+	\textit{Vaswani A., \DIFdelbegin \DIFdel{Shazeer N}\DIFdelend \DIFaddbegin \DIFadd{Gomez A}\DIFaddend ., \DIFdelbegin \DIFdel{Parmar N., Uszkoreit J., }\DIFdelend Jones L., \DIFdelbegin \DIFdel{Gomez A., }\DIFdelend Kaiser L., \DIFaddbegin \DIFadd{Parmar N., }\DIFaddend Polosukhin I.\DIFaddbegin \DIFadd{, Shazeer N., Uszkoreit J.}\DIFaddend } Attention Is All You Need // In Advances in Neural Information Processing Systems. 2017. V.\DIFaddbegin \DIFadd{~}\DIFaddend 5. P.\DIFaddbegin \DIFadd{~}\DIFaddend 6000--6010.
+\bibitem{Devlin2018}
+   \textit{Devlin J., Chang M., Lee K., Toutanova K.} BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding // \DIFdelbegin \DIFdel{arXiv preprint arXiv: 1810.04805. 2018.
+}\DIFdelend \DIFaddbegin \DIFadd{Proc. 2019 Conf. North }{\DIFadd{A}}\DIFadd{merican Chapter of the Association for Computational Linguistics: Human Language Technologies. Minnesota. 2019. V.~1. P.~4171--4186.
+}\DIFaddend \bibitem{Kaiming2015}
+	\textit{He K., \DIFdelbegin \DIFdel{Zhang X., }\DIFdelend Ren S., Sun J.\DIFaddbegin \DIFadd{, Zhang X.}\DIFaddend } Deep Residual Learning for Image Recognition // Proc. \DIFdelbegin \DIFdel{of the IEEE Conference }\DIFdelend \DIFaddbegin \DIFadd{IEEE Conf. }\DIFaddend on Computer Vision and Pattern Recognition. Las Vegas\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{. }\DIFaddend 2016. P.\DIFaddbegin \DIFadd{~}\DIFaddend 770--778.
+\bibitem{bachteev2018}
+	\textit{Бахтеев О.\,Ю., Стрижов В.\,В.} Выбор моделей глубокого обучения субоптимальной сложности // АиТ. 2018. №\DIFaddbegin \DIFadd{~}\DIFaddend 8. С.\DIFaddbegin \DIFadd{~}\DIFaddend 129--147.
+\bibitem{Hinton2015}
+    \textit{Hinton G., \DIFdelbegin \DIFdel{Vinyals O., }\DIFdelend Dean J.\DIFaddbegin \DIFadd{, Vinyals O.}\DIFaddend } Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
+\DIFaddbegin \bibitem{Bucilu2006}
+    \textit{\DIFadd{Bucilu C., Caruana R., Mizil A.}} \DIFadd{Model compression // Proc. ACM SIGKDD Conf. on Knowledge Discovery and Data mining. Philadelphia. 2006. P.~535--541.
+}\bibitem{Lopez2016}
+	\textit{\DIFadd{Lopez-Paz D., Bottou L., Scholkopf B., Vapnik V.}} \DIFadd{Unifying Distillation and Privileged Information // Int. Conf. on Learning Representations. Puerto Rico. 2016.
+}\bibitem{Tang2016}
+    \textit{\DIFadd{Tang Z., Wang D., Zhang Z.}} \DIFadd{Recurrent neural network training with dark knowledge transfer // Proc. IEEE Conf. on Acoustics, Speech and Signal Processing. Shanghai. 2016. V.~2. P.~5900--5904.
+}\bibitem{Tzeng2015}
+    \textit{\DIFadd{Darrell T., Hoffman J., Saenko K., Tzeng E.}} \DIFadd{Simultaneous deep transfer across domains and tasks // Proc. IEEE Conf. on Computer Vision. Santiago. 2015. V.~2. P.~4068--4076.
+}\bibitem{Ahn2019}
+    \textit{\DIFadd{Ahn S., Dai Z., Damianou A., Hu S., Lawrence N.}} \DIFadd{Variational information distillation for knowledge transfer // Proc. IEEE Conf. on Computer Vision and Pattern Recognition. Long Beach. 2019. P.~9163--9171.
+}\DIFaddend \bibitem{mnist}
+	\textit{\DIFdelbegin \DIFdel{LeCun Y}\DIFdelend \DIFaddbegin \DIFadd{Burges C}\DIFaddend ., Cortes C.,  \DIFdelbegin \DIFdel{Burges C}\DIFdelend \DIFaddbegin \DIFadd{LeCun Y}\DIFaddend .} The MNIST dataset of handwritten digits\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{. }\DIFaddend 1998. \text{http://yann.lecun.com/exdb/mnist/index.html}.
+\DIFaddbegin \bibitem{Ziqing2020}
+    \textit{\DIFadd{Che Z., Chen Y., Guoping H., Liu W., Wang T., Ziqing Y.}} \DIFadd{TextBrewer: An Open-Source Knowledge Distillation Toolkit for Natural Language Processing // Proc. 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations. Online. 2020.
 }\bibitem{Zehao2017}
 	\textit{\DIFadd{Huang Z., Naiyan W.}} \DIFadd{Like What You Like: Knowledge Distill via Neuron Selectivity Transfer // arXiv:1707.01219. 2017.
-}\bibitem{Ziqing2020}
-    \textit{\DIFadd{Ziqing Y., Chen Y., Che Z., Liu W., Wang T., Guoping H.}} \DIFadd{TextBrewer: An Open-Source Knowledge Distillation Toolkit for Natural Language Processing // In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations, 2020.
-}\bibitem{Ahn2019}
-    \textit{\DIFadd{Ahn S., Hu S., Damianou A., Lawrence N., Dai Z.}} \DIFadd{Variational Information Distillation for Knowledge Transfer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2019. P. 9163--9171.
-}\bibitem{Tzeng2015}
-    \textit{\DIFadd{Tzeng E., Hoffman J., Darrell T., Saenko K.}} \DIFadd{Simultaneous Deep Transfer Across Domains and Tasks. In Proceedings of the IEEE International Conference on Computer Vision. 2015. V. 2. P. 4068--4076.
-}\bibitem{Tang2016}
-    \textit{\DIFadd{Tang Z., Wang D., Zhang Z.}} \DIFadd{Recurrent neural network training with dark knowledge transfer // In Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing. 2016. V. 2. P. 5900--5904.
-}\bibitem{Bucilu2006}
-    \textit{\DIFadd{Bucilu C., Caruana R., Mizil A.}} \DIFadd{Model compression // In Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data mining. 2006. P. 535--541.
-}\DIFaddend \bibitem{Vaswani2017}
-	\textit{Vaswani A., Shazeer N., Parmar N., Uszkoreit J., Jones L., Gomez A., Kaiser L., Polosukhin I.} Attention Is All You Need // In Advances in Neural Information Processing Systems. 2017. V. 5. P. 6000--6010.
-\bibitem{Devlin2018}
-	\textit{Devlin J., Chang M., Lee K., Toutanova K.} BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding // arXiv preprint arXiv:1810.04805. 2018.
-\bibitem{Kaiming2015}
-	\textit{He K., Zhang X., Ren S., Sun J.} Deep Residual Learning for Image Recognition // Proc. of the IEEE Conference on Computer Vision and Pattern Recognition. Las Vegas, 2016. P. 770--778.
-\bibitem{bachteev2018}
-	\textit{Бахтеев О.\,Ю., Стрижов В.\,В.} Выбор моделей глубокого обучения субоптимальной сложности // АиТ. 2018. № 8. С. 129--147.
-\bibitem{Hinton2015}
-        \textit{Hinton G., Vinyals O., Dean J.} Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
-\bibitem{mnist}
-	\textit{LeCun Y.,  Cortes C., Burges C.} The MNIST dataset of handwritten digits, 1998. \text{http://yann.lecun.com/exdb/mnist/index.html}.
-\bibitem{Vapnik2015}
-	\textit{Vapnik V., Izmailov R.} Learning Using Privileged Information: Similarity Control and Knowledge Transfer // Journal of Machine Learning Research. 2015. No 16. P. 2023--2049.
-\bibitem{Lopez2016}
-	\textit{Lopez-Paz D., Bottou L., Scholkopf B., Vapnik V.} Unifying Distillation and Privileged Information // In International Conference on Learning Representations. Puerto Rico, 2016.
-\bibitem{Ivakhnenko1994}
-	\textit{Madala H., Ivakhnenko A.} Inductive Learning Algorithms for Complex Systems Modeling. Boca Raton: CRC Press Inc., 1994.
+}\bibitem{Wang2020}
+    \textit{\DIFadd{Fu T., Lei Z., Liao S., Mei T., Wang S., Wang X.}} \DIFadd{Exclusivity-Consistency Regularized Knowledge Distillation for Face Recognition // Lecture Notes in Computer Science. 2020. V.~1 P.~23--69.
+}\DIFaddend \bibitem{Vapnik2015}
+	\textit{Vapnik V., Izmailov R.} Learning Using Privileged Information: Similarity Control and Knowledge Transfer // \DIFdelbegin \DIFdel{Journal }\DIFdelend \DIFaddbegin \DIFadd{J. }\DIFaddend of Machine Learning Research. 2015. \DIFdelbegin \DIFdel{No }\DIFdelend \DIFaddbegin \DIFadd{V.~}\DIFaddend 16. P.\DIFaddbegin \DIFadd{~}\DIFaddend 2023--2049.
+\DIFdelbegin %DIFDELCMD < \bibitem{Lopez2016}
+%DIFDELCMD < 	%%%
+\textit{\DIFdel{Lopez-Paz D., Bottou L., Scholkopf B., Vapnik V.}} %DIFAUXCMD
+\DIFdel{Unifying Distillation and Privileged Information // In International Conference on Learning Representations. Puerto Rico, 2016.
+}\DIFdelend \bibitem{Ivakhnenko1994}
+	\textit{\DIFdelbegin \DIFdel{Madala H., }\DIFdelend Ivakhnenko A.\DIFaddbegin \DIFadd{, Madala H.}\DIFaddend } Inductive Learning Algorithms for Complex Systems Modeling. Boca Raton: CRC Press Inc. \DIFdelbegin \DIFdel{, }\DIFdelend 1994.
 \bibitem{fashionmnist}
-	\textit{Xiao H., Rasul K.,Vollgraf R.} Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms // arXiv preprint arXiv:1708.07747. 2017.
+	\textit{\DIFdelbegin \DIFdel{Xiao H., }\DIFdelend Rasul K., Vollgraf R.\DIFaddbegin \DIFadd{, Xiao H.}\DIFaddend } Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms // arXiv preprint arXiv:1708.07747. 2017.
 \bibitem{twiter2013}
-	\textit{Wilson T., Kozareva Z., Nakov P., Rosenthal S., Stoyanov V., Ritter A.} {S}em{E}val-2013 Task 2: Sentiment Analysis in Twitter // Proceedings of the Seventh International Workshop on Semantic Evaluation ({S}em{E}val 2013). Atlanta, 2013. P. 312--320.
+	\textit{\DIFdelbegin \DIFdel{Wilson T., }\DIFdelend Kozareva Z., Nakov P., \DIFaddbegin \DIFadd{Ritter A., }\DIFaddend Rosenthal S., Stoyanov V., \DIFdelbegin \DIFdel{Ritter A}\DIFdelend \DIFaddbegin \DIFadd{Wilson T}\DIFaddend .} {S}em{E}val-2013 Task 2: Sentiment Analysis in Twitter // \DIFdelbegin \DIFdel{Proceedings of the Seventh International }\DIFdelend \DIFaddbegin \DIFadd{Proc. Seventh Int. }\DIFaddend Workshop on Semantic Evaluation ({S}em{E}val 2013). Atlanta\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{. }\DIFaddend 2013. P.\DIFaddbegin \DIFadd{~}\DIFaddend 312--320.
 \bibitem{LeCun1989}
-	\textit{LeCun Y., Boser B., Denker J., Henderson D., Howard R., Hubbard W., Jackel L.} Backpropagation Applied to Handwritten Zip Code Recognition // Neural Computation. 1989. V. 1. No 4. P. 541--551.
+	\textit{\DIFdelbegin \DIFdel{LeCun Y., }\DIFdelend Boser B., Denker J., Henderson D., Howard R., Hubbard W., Jackel L.\DIFaddbegin \DIFadd{, LeCun Y.}\DIFaddend } Backpropagation Applied to Handwritten Zip Code Recognition // Neural Computation. 1989. V. 1. No 4. P. 541--551.
 \bibitem{Schmidhuber1997}
 	\textit{Hochreiter S., Schmidhuber J.} Long short-term memory // Neural Computation. 1997. V. 9. No 8.  P. 1735--1780.
 \bibitem{kingma2014}
-	\textit{Kingma D, Ba J.} Adam: A Method for Stochastic Optimization // arXiv preprint arXiv:1412.6980. 2014.
+	\textit{\DIFdelbegin \DIFdel{Kingma D, }\DIFdelend Ba J.\DIFaddbegin \DIFadd{, Kingma D}\DIFaddend } Adam: A Method for Stochastic Optimization // \DIFdelbegin \DIFdel{arXiv preprint arXiv:1412.6980}\DIFdelend \DIFaddbegin \DIFadd{Int. Conf. on Learning Representations. San Diego}\DIFaddend . 2014.
 \bibitem{Code2020}
 	Код вычислительного эксперимента. URL: \url{https://github.com/andriygav/PrivilegeLearning}
  \end{thebibliography}
 
+
 \AdditionalInformation{Грабовой А.В.}{Московский физико-технический институт, студент, Москва}{grabovoy.av@phystech.edu}
 
 \AdditionalInformation{Стрижов В.В.}{Московский физико-технический институт, профессор, Москва}{strijov@phystech.edu}
+
+
 \end{document}
