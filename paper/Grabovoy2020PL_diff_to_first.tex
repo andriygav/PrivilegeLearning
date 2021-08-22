@@ -314,7 +314,7 @@
     \item выбираем оптимальную модель ученика $\mathbf{g} \in \mathfrak{G}_{\text{cl}}$ используя дистилляцию~\cite{Hinton2015}. 
 \end{enumlist}
 
-Модель ученика \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует \eqref{eq:hinton:L:new}. Модель учителя \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует кросс--энтропийную \DIFdelbegin \DIFdel{функции }\DIFdelend \DIFaddbegin \DIFadd{функцию }\DIFaddend ошибки:
+Модель ученика \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует \eqref{eq:hinton:L:new}. Модель учителя \DIFdelbegin \DIFdel{~--- это функция, которая }\DIFdelend минимизирует кросс-энтропийную \DIFdelbegin \DIFdel{функции }\DIFdelend \DIFaddbegin \DIFadd{функцию }\DIFaddend ошибки:
 \begin{gather}
 \label{eq:hinton.2}
 \DIFdelbegin %DIFDELCMD < \begin{aligned}
@@ -617,11 +617,11 @@ y'_i &= \begin{cases}
 
 \begin{figure}[h!t]\center
 \includegraphics[width=1\textwidth]{figures/mnist_loss}
-\caption{Зависимость \DIFdelbeginFL \DIFdelFL{кросс--этропии }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{кросс-энтропии }\DIFaddendFL между истинными метками и предсказанными учеников вероятностями классов: a) на обучающей выборке; b) на тестовой выборке.}
+\caption{Зависимость \DIFdelbeginFL \DIFdelFL{кросс-этропии }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{кросс-энтропии }\DIFaddendFL между истинными метками и предсказанными учеников вероятностями классов: a) на обучающей выборке; b) на тестовой выборке.}
 \label{fg:ex:fashionmnist:loss}
 \end{figure}
 
-На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс--энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика. На графике сравнивается \DIFdelbegin \DIFdel{моделя}\DIFdelend \DIFaddbegin \DIFadd{модель}\DIFaddend , которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. \DIFdelbegin \DIFdel{На графике }\DIFdelend \DIFaddbegin \DIFadd{Из графика }\DIFaddend видно, что обе модели начинают \DIFdelbegin \DIFdel{переобучатся }\DIFdelend \DIFaddbegin \DIFadd{переобучаться }\DIFaddend после 30-й итерации\DIFdelbegin \DIFdel{, но }\DIFdelend \DIFaddbegin \DIFadd{. Но }\DIFaddend модель, которая получена путем дистилляции\DIFdelbegin \DIFdel{переобувается }\DIFdelend \DIFaddbegin \DIFadd{, переобучается }\DIFaddend не так быстро\DIFdelbegin \DIFdel{, что следует из того, что }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
+На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс-энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика. На графике сравнивается \DIFdelbegin \DIFdel{моделя}\DIFdelend \DIFaddbegin \DIFadd{модель}\DIFaddend , которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. \DIFdelbegin \DIFdel{На графике }\DIFdelend \DIFaddbegin \DIFadd{Из графика }\DIFaddend видно, что обе модели начинают \DIFdelbegin \DIFdel{переобучатся }\DIFdelend \DIFaddbegin \DIFadd{переобучаться }\DIFaddend после 30-й итерации\DIFdelbegin \DIFdel{, но }\DIFdelend \DIFaddbegin \DIFadd{. Но }\DIFaddend модель, которая получена путем дистилляции\DIFdelbegin \DIFdel{переобувается }\DIFdelend \DIFaddbegin \DIFadd{, переобучается }\DIFaddend не так быстро\DIFdelbegin \DIFdel{, что следует из того, что }\DIFdelend \DIFaddbegin \DIFadd{: }\DIFaddend ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
 
 \DIFaddbegin \DIFadd{В табл.~\ref{tb:ce:1} показано, что для выборки FashionMnist итоговые модели ученика с учителем и без учителя сравнимы по точности и кросс-энтропийной ошибке, если учитывать дисперсию этих величин.
 }
@@ -639,7 +639,7 @@ y'_i &= \begin{cases}
 На рис.~\ref{fg:ex:synt:distr:real} показано распределение по классам для\DIFdelbegin \DIFdel{каждого объекта }\DIFdelend \DIFaddbegin \DIFadd{~$20$ объектов из }\DIFaddend обучающей выборки. \DIFaddbegin \DIFadd{Каждому столбцу на графике соответствует объект, а каждой строке соответствует вероятность класса. }\DIFaddend Видно, что \DIFdelbegin \DIFdel{все классы являются равновероятными. }\DIFdelend \DIFaddbegin \DIFadd{для каждого рассмотренного объекта вероятности разных классов близки. Получается, что если в качестве истинных меток взять класс с максимальной вероятностью, то выборка будет сильно зашумленной и модель будет описывать эти данные некорректно.
 }\DIFaddend 
 
-Построим в качестве ученика \DIFdelbegin \DIFdel{простую }\DIFdelend линейную модель, которая минимизирует крос--энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.
+Построим в качестве ученика \DIFdelbegin \DIFdel{простую }\DIFdelend линейную модель, которая минимизирует кросс-энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.
 
 \begin{figure}[h!t]\center
 \includegraphics[width=0.35\textwidth]{figures/linear_model}
@@ -784,7 +784,7 @@ y'_i &= \begin{cases}
 
 Теорема~\ref{theorem:st:reg} показала, что \DIFdelbegin \DIFdel{обучения }\DIFdelend \DIFaddbegin \DIFadd{обучение }\DIFaddend линейной регрессии с учителем эквивалентно замене обучающей \DIFdelbegin \DIFdel{выборке }\DIFdelend \DIFaddbegin \DIFadd{выборки }\DIFaddend и вероятностных предположений о распределении истинных ответов. Для задачи классификации ответы учителя дают дополнительную информацию в виде распределения классов для каждого объекта из обучающей выборки. Данная информация не может быть переписана в виде \DIFdelbegin \DIFdel{классической }\DIFdelend задачи классификации. Для использования данной информации требуется использовать распределение, которое представлено в теореме~\ref{theorem:st:dist}.
 
-В вычислительном эксперименте \DIFdelbegin \DIFdel{сравнивается модель }\DIFdelend \DIFaddbegin \DIFadd{сравниваются модели }\DIFaddend ученика, \DIFdelbegin \DIFdel{которая обучена без использования учителя и }\DIFdelend \DIFaddbegin \DIFadd{которые обучены }\DIFaddend с использованием модели учителя \DIFaddbegin \DIFadd{и бег него}\DIFaddend . В таблице~\ref{tb:ce:1} показаны результаты вычислительного эксперимента для разных выборок. \DIFdelbegin \DIFdel{Из таблицы видно}\DIFdelend \DIFaddbegin \DIFadd{Показано}\DIFaddend , что точность аппроксимации выборки учеником улучшается при использовании модели учителя. \DIFdelbegin \DIFdel{Задачи }\DIFdelend \DIFaddbegin \DIFadd{Задача }\DIFaddend регрессии не приведена в вычислительном эксперименте, так как в теореме~\ref{theorem:st:reg} была показана \DIFaddbegin \DIFadd{ее }\DIFaddend эквивалентность \DIFdelbegin \DIFdel{классическому решению задачи }\DIFdelend \DIFaddbegin \DIFadd{задаче }\DIFaddend линейной регрессии. Для задачи классификации проведен вычислительный эксперимент. \DIFaddbegin \DIFadd{Из вычислительного эксперимента видно, что дистилляция влияет на распределение классов в рамках одного объекта. Вероятности классов для каждого объекта являются более разреженными, а не концентрируются в одном классе. Данное свойство хорошо видно в синтетической выборке, так как она генерировалась с максимальной дисперсией в вероятностях классов.
+В вычислительном эксперименте \DIFdelbegin \DIFdel{сравнивается модель }\DIFdelend \DIFaddbegin \DIFadd{сравниваются модели }\DIFaddend ученика, \DIFdelbegin \DIFdel{которая обучена без использования учителя и }\DIFdelend \DIFaddbegin \DIFadd{которые обучены }\DIFaddend с использованием модели учителя \DIFaddbegin \DIFadd{и без  него}\DIFaddend . В таблице~\ref{tb:ce:1} показаны результаты вычислительного эксперимента для разных выборок. \DIFdelbegin \DIFdel{Из таблицы видно}\DIFdelend \DIFaddbegin \DIFadd{Показано}\DIFaddend , что точность аппроксимации выборки учеником улучшается при использовании модели учителя. \DIFdelbegin \DIFdel{Задачи }\DIFdelend \DIFaddbegin \DIFadd{Задача }\DIFaddend регрессии не приведена в вычислительном эксперименте, так как в теореме~\ref{theorem:st:reg} была показана \DIFaddbegin \DIFadd{ее }\DIFaddend эквивалентность \DIFdelbegin \DIFdel{классическому решению задачи }\DIFdelend \DIFaddbegin \DIFadd{задаче }\DIFaddend линейной регрессии. Для задачи классификации проведен вычислительный эксперимент. \DIFaddbegin \DIFadd{Из вычислительного эксперимента видно, что дистилляция влияет на распределение классов в рамках одного объекта. Вероятности классов для каждого объекта являются более разреженными, а не концентрируются в одном классе. Данное свойство хорошо видно в синтетической выборке, так как она генерировалась с максимальной дисперсией в вероятностях классов.
 }\DIFaddend 
 
 \DIFaddbegin \DIFadd{Основным результатом данной работы является вероятностная интерпретация  задачи дистилляции. Рассмотрен частный случай, когда признаковое описание модели учителя и ученика совпадает. }\DIFaddend В \DIFaddbegin \DIFadd{рамках вычислительного эксперимента проведен анализ ответов модели ученика с использованием модели учителя и без нее. Из результатов эксперимента видно, что модель ученика наследует распределение вероятностей по классам от модели учителя. В случае, когда модель учителя адекватно описывает данные, описание данных моделью ученика также улучшается, что показано в вычислительном эксперимента на синтетических данных.
@@ -800,11 +800,11 @@ y'_i &= \begin{cases}
 }\bibitem{Ziqing2020}
     \textit{\DIFadd{Ziqing Y., Chen Y., Che Z., Liu W., Wang T., Guoping H.}} \DIFadd{TextBrewer: An Open-Source Knowledge Distillation Toolkit for Natural Language Processing // In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations, 2020.
 }\bibitem{Ahn2019}
-    \textit{\DIFadd{Ahn S., Hu S., Damianou A., Lawrence N., Dai Z.}} \DIFadd{Variational information distil- lation for knowledge transfer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2019. P. 9163--9171.
+    \textit{\DIFadd{Ahn S., Hu S., Damianou A., Lawrence N., Dai Z.}} \DIFadd{Variational Information Distillation for Knowledge Transfer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2019. P. 9163--9171.
 }\bibitem{Tzeng2015}
-    \textit{\DIFadd{Tzeng E., Hoffman J., Darrell T., Saenko K.}} \DIFadd{Simultaneous deep transfer across domains and tasks. In Proceedings of the IEEE International Conference on Com- puter Vision. 2015. V. 2. P. 4068--4076.
+    \textit{\DIFadd{Tzeng E., Hoffman J., Darrell T., Saenko K.}} \DIFadd{Simultaneous Deep Transfer Across Domains and Tasks. In Proceedings of the IEEE International Conference on Computer Vision. 2015. V. 2. P. 4068--4076.
 }\bibitem{Tang2016}
-    \textit{\DIFadd{Tang Z., Wang D., Zhang Z.}} \DIFadd{Recurrent neural network training with dark knowledge transfer // In Proceedings of the IEEE International Conference on Acous- tics, Speech and Signal Processing. 2016. V. 2. P. 5900--5904.
+    \textit{\DIFadd{Tang Z., Wang D., Zhang Z.}} \DIFadd{Recurrent neural network training with dark knowledge transfer // In Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing. 2016. V. 2. P. 5900--5904.
 }\bibitem{Bucilu2006}
     \textit{\DIFadd{Bucilu C., Caruana R., Mizil A.}} \DIFadd{Model compression // In Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data mining. 2006. P. 535--541.
 }\DIFaddend \bibitem{Vaswani2017}
@@ -839,10 +839,7 @@ y'_i &= \begin{cases}
 	Код вычислительного эксперимента. URL: \url{https://github.com/andriygav/PrivilegeLearning}
  \end{thebibliography}
 
-
 \AdditionalInformation{Грабовой А.В.}{Московский физико-технический институт, студент, Москва}{grabovoy.av@phystech.edu}
 
 \AdditionalInformation{Стрижов В.В.}{Московский физико-технический институт, профессор, Москва}{strijov@phystech.edu}
-
-
 \end{document}
