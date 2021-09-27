@@ -10,6 +10,8 @@
 \usepackage{autonum}
 \usepackage{enumerate}
 \usepackage{cite}
+\usepackage{caption}
+\usepackage{subcaption}
 \renewcommand{\baselinestretch}{2}
 
 \usepackage{cite}
@@ -25,7 +27,7 @@
 \authors{А.В.~ГРАБОВОЙ (grabovoy.av@phystech.edu)\\
 (Московский физико-технический институт),\\
 В.В.~СТРИЖОВ, д-р~физ.-мат.~наук (strijov@phystech.edu)\\
-(Московский физико-технический институт, Вычислительный центр им. А.А. Дородницына ФИЦ ИУ РАН)}
+(Московский физико-технический институт; Вычислительный центр им. А.А. Дородницына ФИЦ ИУ РАН, Москва)}
 
 \maketitle
 \begin{abstract}
@@ -88,7 +90,7 @@
 \mathcal{I} = \{1 \leq i \leq m |~\text{для $i$-го объекта задана привилегированная информация}\},
 \end{aligned}
 \end{gather}
-а множество индексов объектов, для которых неизвестна привилегированная информация, обозначим $\bar{\mathcal{I}}=\{1, \cdots, m\}\setminus \mathcal{I}$.
+а множество индексов объектов, для которых неизвестна привилегированная информация, обозначим $\bar{\mathcal{I}}=\{1, \ldots, m\}\setminus \mathcal{I}$.
 
 Пусть на множестве привилегированных признаков задана функция учителя
 \begin{gather}
@@ -115,9 +117,9 @@
 \end{gather}
 
 \section{Постановка задачи Хинтона и Вапника}\label{state:hinton}
-Рассмотрим описание метода, предложенного в публикациях~\cite{Hinton2015, Lopez2016}, в которых предполагается, что для всех данных доступна привилегированная информация~$\mathcal{I} = \{1, 2, \cdots, m\}$. В~\cite{Hinton2015} решается задача классификации:
+Рассмотрим описание метода, предложенного в публикациях~\cite{Hinton2015, Lopez2016}, в которых предполагается, что для всех данных доступна привилегированная информация~$\mathcal{I} = \{1, 2, \ldots, m\}$. В~\cite{Hinton2015} решается задача классификации:
 \begin{gather}
-    \mathfrak{D} = \{\left(\mathbf{x}_i, y_i\right)\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad y_i \in \mathbb{Y}=\{1, \cdots, K\},
+    \mathfrak{D} = \{\left(\mathbf{x}_i, y_i\right)\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad y_i \in \mathbb{Y}=\{1, \ldots, K\},
 \end{gather}
 где~$y_i$~--- класс объекта. Обозначим через~$\mathbf{y}_i$ вектор вероятности  класса объекта~$\mathbf{x}_i$.
 
@@ -158,7 +160,7 @@
 
 Публикация~\cite{Lopez2016} обобщает метод, предложенный в~\cite{Hinton2015}. Решение задачи оптимизации~\eqref{eq:hinton:opt} зависит только от вектора ответов модели учителя~$\mathbf{f}$. Следовательно, признаковые пространства учителя и ученика могут различаться. В этом случае получаем постановку задачи:
 \begin{gather}
-    \mathcal{D} = \left\{\left(\mathbf{x}_i, \mathbf{x}^*_i, y_i\right)\right\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad \mathbf{x}^*_i \in \mathbb{R}^{n^*}, \quad y_i \in \{1, \cdots, K\},
+    \mathcal{D} = \left\{\left(\mathbf{x}_i, \mathbf{x}^*_i, y_i\right)\right\}_{i=1}^{m}, \qquad \mathbf{x}_i \in \mathbb{R}^{n}, \quad \mathbf{x}^*_i \in \mathbb{R}^{n^*}, \quad y_i \in \{1, \ldots, K\},
 \end{gather}
 где~$\mathbf{x}_i$~--- информация, доступная на этапах обучения и контроля, а $\mathbf{x}^*_i$~--- информация, доступная только на этапе обучения. Модель учителя принадлежит множеству моделей~$\mathfrak{F}_{cl}^*$:
 \begin{gather}
@@ -254,28 +256,26 @@ p\bigr(\mathbf{Y}, \mathbf{S}|\mathbf{X}, \mathbf{g}, \mathcal{I}\bigr)=\prod_{i
 
 
 
-На рис.~\ref{fg:st:plate} показан вид вероятностной модели в графовой нотации для произвольной функции~$\mathbf{g}$.\marginpar{Рис. \ref{fg:st:plate}.} Для каждой реализации~$\mathbf{g}$ соответствующий блок требует уточнения. На рис~\ref{fg:ex:synt:plate} показана более подробная реализация в случае, когда~$\mathbf{g}$~--- линейная модель.\marginpar{Рис. \ref{fg:ex:synt:plate}.}
+На рис.~\ref{fg:st:plate} показан вид вероятностной модели в графовой нотации для произвольной функции~$\mathbf{g}$.\marginpar{Рис. \ref{fg:st:plate}.} Для каждой реализации~$\mathbf{g}$ соответствующий блок требует уточнения. На рис.~\ref{fg:ex:synt:plate} показана более подробная реализация в случае, когда~$\mathbf{g}$~--- линейная модель.\marginpar{Рис. \ref{fg:ex:synt:plate}.}
 
 \section{Обучение с учителем для задачи классификации и регрессии}
 \subsection{Случай классификации}
 Для задачи многоклассовой классификации рассматриваются вероятностные 
-\emph{предположения:}
-\emph{
+{\sl{п\,р\,е\,д\,п\,о\,л\,о\,ж\,е\,н\,и\,я:}}
 \begin{enumerate}[1)]
 \label{st:class:1}
-	\item рассматривается функция учителя $\mathbf{f}\in\mathfrak{F}_{\text{cl}}^{*}$~\eqref{eq:F:set:cl:priv};
-	\item рассматривается функция ученика   $\mathbf{g}\in\mathfrak{G}_{\text{cl}}$~\eqref{eq:G:set:cl};
-	\item для истинных меток рассматривается категориальное распределение~$p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$, где $\mathbf{g}\bigr(\mathbf{x}\bigr)$ задает вероятность каждого класса;
-	\item для меток учителя введем плотность распределения
+	\item \emph{рассматривается функция учителя} $\mathbf{f}\in\mathfrak{F}_{\text{cl}}^{*}$~\emph{\eqref{eq:F:set:cl:priv};}
+	\item \emph{рассматривается функция ученика}   $\mathbf{g}\in\mathfrak{G}_{\text{cl}}$~\emph{\eqref{eq:G:set:cl};}
+	\item \emph{для истинных меток рассматривается категориальное распределение}~$p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$, \emph{где $\mathbf{g}\bigr(\mathbf{x}\bigr)$ задает вероятность каждого класса;}
+	\item \emph{для меток учителя введем плотность распределения}
 \begin{gather}
 \label{reg:dist}
 \begin{aligned}
 	p\bigr(\mathbf{s}|\mathbf{x}, \mathbf{g}\bigr) = C\prod_{k=1}^{K}g_k\bigr(\mathbf{x}\bigr)^{s^k},
 \end{aligned}
 \end{gather}
-где~$g^k$~--- вероятность класса~$k$, которую предсказывает модель ученика, а~$s^k$~--- вероятность класса~$k$, которую предсказывает модель учителя.
+\emph{где~$g^k$~--- вероятность класса~$k$, которую предсказывает модель ученика, а~$s^k$~--- вероятность класса~$k$, которую предсказывает модель учителя.}
 \end{enumerate}
-}
 \begin{theorem}
 \label{theorem:st:dist}
 Пусть вероятность каждого класса отделима от нуля и единицы, т.е. для всех~$k$ выполняется условие
@@ -330,44 +330,44 @@ C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf
 \end{aligned}
 \end{gather}
 
-Проанализировав выражение~\eqref{eq:st:class:1}, получаем, что первые три слагаемых совпадают со слагаемыми в выражении~\eqref{eq:hinton:1} при~$\mathcal{I} = \{1, \cdots, m\}$ и $\lambda=\frac{1}{2}$, а четвертое слагаемое является некоторым регуляризатором, который получен из вида распределения. Анализируя первые три слагаемых в выражении~\eqref{eq:st:class:1} при~$T_0 = 1$, получаем сумму кросс-энтропий между двумя распределениями для каждого объекта:
+Проанализировав выражение~\eqref{eq:st:class:1}, получаем, что первые три слагаемых совпадают со слагаемыми в выражении~\eqref{eq:hinton:1} при~$\mathcal{I} = \{1, \ldots, m\}$ и $\lambda=\frac{1}{2}$, а четвертое слагаемое является некоторым регуляризатором, который получен из вида распределения. Анализируя первые три слагаемых в выражении~\eqref{eq:st:class:1} при~$T_0 = 1$, получаем сумму кросс-энтропий между двумя распределениями для каждого объекта:
 \begin{enumerate}[1)]
 	\item первое распределение~--- это выпуклая комбинация с весами~$1-\lambda$ и $\lambda$ распределения, задаваемого метками объектов~$\text{Cat}\bigr(\mathbf{y}\bigr)$, и распределения, задаваемого моделью учителя~$\text{Cat}\bigr(\mathbf{s}\bigr)$;
 	\item второе распределение~--- это распределение, задаваемое моделью ученика~$\text{Cat}\bigr(\mathbf{g}\bigr(\mathbf{x}\bigr)\bigr)$.
 \end{enumerate}
+
 Следовательно, модель ученика восстанавливает плотность не исходных меток, а новую плотность, которая является выпуклой комбинацией плотности исходных меток и меток учителя.
 \subsection{Случай регрессии}
-Для задачи регрессии рассматриваются вероятностные \emph{предположения:}
-\emph{
+Для задачи регрессии рассматриваются вероятностные \emph{п\,р\,е\,д\,п\,о\,л\,о\,ж\,е\,н\,и\,я:}
+
 \begin{enumerate}[1)]
-	\item рассматривается функция учителя~$\mathbf{f}\in\mathfrak{F}_{\text{rg}}^{*}$,
+	\item \emph{рассматривается функция учителя~$\mathbf{f}\in\mathfrak{F}_{\text{rg}}^{*}$,
 	%\begin{gather}
 	%\label{eq:F:set:priv}
 	%\begin{aligned}
 	\[
-	\mathfrak{F}_{\text{rg}}^* = \left\{\mathbf{f}| \mathbf{f} = \mathbf{v}^*\bigr(\mathbf{x}^*\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R} \right\};
+	\mathfrak{F}_{\text{rg}}^* = \left\{\mathbf{f}| \mathbf{f} = \mathbf{v}^*\bigr(\mathbf{x}^*\bigr), \quad \mathbf{v}^*: \mathbb{R}^{n^*} \to \mathbb{R} \right\},
 	\]
 	%\end{aligned}
 	%\end{gather}
-	где~$\mathbf{v}^*$~--- дифференцируемая параметрическая функция;
-	\item рассматривается функция ученика~$\mathbf{g}\in\mathfrak{G}_{\text{rg}}$,
+	где~$\mathbf{v}^*$~--- дифференцируемая параметрическая функция;}
+	\item \emph{рассматривается функция ученика~$\mathbf{g}\in\mathfrak{G}_{\text{rg}}$,
     %\begin{gather}
     %\label{eq:G:set:rg}
     \[
-    \mathfrak{G}_{\text{rg}} = \left\{\mathbf{g}| \mathbf{g} = \mathbf{z}\bigr(\mathbf{x}\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\};
+    \mathfrak{G}_{\text{rg}} = \left\{\mathbf{g}| \mathbf{g} = \mathbf{z}\bigr(\mathbf{x}\bigr), \quad \mathbf{z}: \mathbb{R}^n \to \mathbb{R}^K \right\},
     \]
     %\end{gather}
-    где~$\mathbf{z}$~--- дифференцируемая параметрическая функция;
-	\item истинные метки имеют нормальное распределение
+    где~$\mathbf{z}$~--- дифференцируемая параметрическая функция;}
+	\item \emph{истинные метки имеют нормальное распределение
 	\begin{gather}
 		p\bigr(y|\mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(y|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma\bigr);
-	\end{gather}
-	\item метки учителя имеют распределение
+	\end{gather}}
+	\item \emph{метки учителя имеют распределение
 	\begin{gather}
 		p\bigr(s| \mathbf{x}, \mathbf{g}\bigr) = \mathcal{N}\bigr(s|\mathbf{g}\bigr(\mathbf{x}\bigr), \sigma_s\bigr).
-	\end{gather}
+	\end{gather}}
 \end{enumerate}
-}
 Используя предположения~1--4 и подставляя в~\eqref{eq:st:12}, получаем оптимизационную задачу:
 \begin{gather}
 \label{eq:st:reg:1}
@@ -387,7 +387,7 @@ C=\left(-1\right)^{K}\frac{K^{K/2}}{2^{K(K-1)/2}}\prod_{k=1}^{K}g_k\bigr(\mathbf
 \mathbf{y''} = \mathbf{X}\mathbf{w} + \bm{\varepsilon},\qquad \bm{\varepsilon} \sim \mathcal{N}\bigr(\mathbf{0}, \bm{\Sigma}\bigr),
 \end{aligned}
 \end{gather}
-где $\bm{\Sigma}^{-1}={\mathbf{diag}}\bigr(\bm{\sigma'}\bigr)$ и $\mathbf{y''}$ имеют вид:
+где $\bm{\Sigma}^{-1}={\text{\normalfont{diag}}}\bigr(\bm{\sigma'}\bigr)$ и $\mathbf{y''}$ имеют вид:
 \begin{gather}
 \label{eq:st:reg:th:st:2}
 \begin{aligned}
@@ -462,7 +462,7 @@ y'_i &= \begin{cases}
 
 На рис.~\ref{fg:ex:fashionmnist:loss} показан график зависимости кросс--энтропии между истинными метками объектов и вероятностями, которые предсказывает модель ученика.\marginpar{Рис. \ref{fg:ex:fashionmnist:loss}.} На графике сравнивается модель, которая обучалась без учителя (в задаче оптимизации~\eqref{eq:st:class:1} присутствует только первое слагаемое) с моделью, которая была получена путем дистилляции модели нейросети в линейную модель. Из графика видно, что обе модели начинают переобучаться после 30-й итерации. Но модель, которая получена путем дистилляции, переобучается не так быстро: ошибка на тестовой выборке растет медленней, а на обучающей выборке падает также медленней.
 
-В таблице~\ref{tb:ce:1} показано, что для выборки FashionMnist итоговые модели ученика с учителем и без учителя сравнимы по точности и кросс-энтропийной ошибке, если учитывать дисперсию этих величин.
+В таблице показано, что для выборки FashionMnist итоговые модели ученика с учителем и без учителя сравнимы по точности и кросс-энтропийной ошибке, если учитывать дисперсию этих величин.
 
 \subsection{Синтетический эксперимент}
 Проанализируем модель на синтетической выборке. Выборка построена следующим образом:
@@ -472,11 +472,11 @@ y'_i &= \begin{cases}
  \mathbf{S} &= \text{softmax}\left(\mathbf{XW}\right), \quad &\mathbf{y} &= \left[\text{Cat}\bigr(y_i| \mathbf{s}_i\bigr)\right],
 \end{aligned}
 \end{gather}
-где функция~$\text{softmax}$ берется построчно. Строки матрицы~$\mathbf{S}$ будем рассматривать как предсказание учителя, т.е. учитель знает истинные вероятности каждого класса. На рис.~\ref{fg:ex:synt:plate} показана вероятностная модель в графовой нотации.\marginpar{Рис. \ref{fg:ex:synt:plate}.} В эксперименте число признаков~$n=10$, число классов~$K=3$, для обучения было сгенерировано~$m_{\text{train}}=1000$ и~$m_{\text{test}}=100$ объектов.
+где функция~$\text{softmax}$ берется построчно. Строки матрицы~$\mathbf{S}$ будем рассматривать как предсказание учителя, т.е. учитель знает истинные вероятности каждого класса. На рис.~\ref{fg:ex:synt:plate} показана вероятностная модель в графовой нотации. В эксперименте число признаков~$n=10$, число классов~$K=3$, для обучения было сгенерировано~$m_{\text{train}}=1000$ и~$m_{\text{test}}=100$ объектов.
 
 На рис.~\ref{fg:ex:synt:distr:real} показано распределение по классам для~$20$ объектов из обучающей выборки.\marginpar{Рис. \ref{fg:ex:synt:distr:real}.} Каждому столбцу на графике соответствует объект, а каждой строке соответствует вероятность класса. Видно, что для каждого рассмотренного объекта вероятности разных классов близки. Получается, что если в качестве истинных меток взять класс с максимальной вероятностью, то выборка будет сильно зашумленной и модель будет описывать эти данные некорректно.
 
-Построим в качестве ученика линейную модель, которая минимизирует кросс-энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.\marginpar{Рис. \ref{fg:ex:synt:plate}.}
+Построим в качестве ученика линейную модель, которая минимизирует кросс-энтропийную (первое слагаемое в формуле~\eqref{eq:st:class:1}). Представление данной модели в виде графовой модели показано на рис.~\ref{fg:ex:synt:plate}.
 
 
 На рис.~\ref{fg:ex:synt:distr:without} показано распределение вероятностей классов, которое предсказала модель. Видно, что полученное распределение не соответствует истинному, так как модель сосредотачивает всю вероятность в одном классе.\marginpar{Рис. \ref{fg:ex:synt:distr:without}.}
@@ -505,22 +505,20 @@ y'_i &= \begin{cases}
 \mathcal{L}_{\text{maxmin}}\bigr(\mathbf{g}\bigr) = \frac{1}{m}\sum_{i=1}^{m}\left(\max_{k}g_k\bigr(\mathbf{x}_i\bigr) -  \min_{k}g_k\bigr(\mathbf{x}_i\bigr)\right).
 \end{aligned}
 \end{gather}
-Видно, что модель учителя имеет меньшую разницу между вероятностями классов,т.е. вероятности классов не концентрируются в одном классе.
+Видно, что модель учителя имеет меньшую разницу между вероятностями классов, т.е. вероятности классов не концентрируются в одном классе.
 
 \subsection{Выборка Twitter Sentiment Analysis}
 Проводится эксперимент на выборке Twitter Sentiment Analysis. Данная выборка содержит короткие сообщения, для которых требуется предсказать эмоциональный окрас: содержит твит позитивный окрас или негативный. Выборка разделена на~$1{,}18$ миллиона твитов для обучения и~$0{,}35$ миллиона твитов для тестирования. В твитах была выполнена предобработка: все твиты были переведены в нижний регистр, все никнеймы вида~``@andrey'' были заменены на токен ``name'', все цифры были заменены на токен ``number''.
 
-Результаты данной части эксперимента показаны в таблице.%~\ref{tb:ce:1}. 
-В качестве модели учителя использовалась модель Bi-LSTM с линейным слоем на выходе. В качестве векторного представления токенов обучалась матрица параметров. В ней каждая строка соответствует токену из обучающей выборки. Суммарное число обучаемых параметров модели учителя составляет более~$30$ миллионов. Обученная модель учителя имеет точность предсказания~$0{,}835$. В качестве модели ученика рассматривается линейная модель с $1538$ параметрами, где в качестве векторного представления предложения рассматривается выход предобученной модели BERT с размерностью векторного пространства~$768$. Признаковое описание модели учителя и модели ученика различаются. Модель учителя в качестве признакового описания рассматривает исходные слова в предложении. Модель ученика в качестве признакового описания использует готовое векторное представление предложения, которое получено при помощи модели BERT.
+Результаты данной части эксперимента показаны в таблице. В качестве модели учителя использовалась модель Bi-LSTM с линейным слоем на выходе. В качестве векторного представления токенов обучалась матрица параметров. В ней каждая строка соответствует токену из обучающей выборки. Суммарное число обучаемых параметров модели учителя составляет более~$30$ миллионов. Обученная модель учителя имеет точность предсказания~$0{,}835$. В качестве модели ученика рассматривается линейная модель с $1538$ параметрами, где в качестве векторного представления предложения рассматривается выход предобученной модели BERT с размерностью векторного пространства~$768$. Признаковое описание модели учителя и модели ученика различаются. Модель учителя в качестве признакового описания рассматривает исходные слова в предложении. Модель ученика в качестве признакового описания использует готовое векторное представление предложения, которое получено при помощи модели BERT.
 
-В таблице~%\ref{tb:ce:1} 
-показано качество модели ученика с использованием предсказания модели учителя и без него. В рамках данных результатов качество модели ученика с дистилляцией выше, чем модели ученика без дистилляции, но разница находится в пределах погрешности, что не позволяет говорить об значительных улучшениях качества.
+В таблице показано качество модели ученика с использованием предсказания модели учителя и без него. В рамках данных результатов качество модели ученика с дистилляцией выше, чем модели ученика без дистилляции, но разница находится в пределах погрешности, что не позволяет говорить об значительных улучшениях качества.
 
 Программное обеспечение для проведения экспериментов и проверки результатов находится в~\cite{Code2020}.
 
 \section{Заключение}
 \begin{table}[]
-\caption{{\bf Таблица 1.} Сводная таблица результатов вычислительного эксперимента}
+\caption{{\bf Таблица.} Сводная таблица результатов вычислительного эксперимента}
 \label{tb:ce:1}
 \begin{center}
 \resizebox{\textwidth}{!}{
@@ -562,7 +560,7 @@ y'_i &= \begin{cases}
 	\textit{He K., Ren S., Sun J., Zhang X.} Deep Residual Learning for Image Recognition // Proc. IEEE Conf. on Computer Vision and Pattern Recognition. Las Vegas. 2016. P.~770--778.
  \bibitem{bachteev2018}
  	\textit{Бахтеев О.Ю., Стрижов В.В.} Выбор моделей глубокого обучения субоптимальной сложности // АиТ. 2018. №~8. С.~129--147. \\
- 	\textit{Bakhteev O.Yu., Strijov V.V.} Deep Learning Model Selection of Suboptimal Complexity // Automation and Remote Control. 2018. Vol.~79. P.~1474--1488.
+ 	\textit{Bakhteev O.Yu., Strijov V.V.} Deep Learning Model Selection of Suboptimal Complexity // Automat. Remote Control. 2018. V.~79. P.~1474--1488.
 \bibitem{Hinton2015}
     \textit{Hinton G., Dean J., Vinyals O.} Distilling the Knowledge in a Neural Network // NIPS Deep Learning and Representation Learning Workshop. 2015.
 \bibitem{Bucilu2006}
@@ -602,7 +600,8 @@ y'_i &= \begin{cases}
  \end{thebibliography}
  
 \newpage
-
+{
+\renewcommand{\baselinestretch}{1}
 \begin{figure}[h!]\center
 \includegraphics[width=0.35\textwidth]{figures/general_model}
 \caption{Рис. 1.}
@@ -615,8 +614,17 @@ y'_i &= \begin{cases}
 \label{fg:ex:synt:plate}
 \end{figure}
 
-\begin{figure}[h!]\center
-\includegraphics[width=1\textwidth]{figures/mnist_loss.png}
+\begin{figure}[h!]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\caption*{~~~~\textit{а}}
+\includegraphics[width=\textwidth]{figures/mnist_loss_1.png}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\caption*{~~~~\textit{б}}
+\includegraphics[width=\textwidth]{figures/mnist_loss_2.png}
+\end{subfigure}%
 \caption{Рис. 3.}
 \label{fg:ex:fashionmnist:loss}
 \end{figure}
@@ -639,16 +647,54 @@ y'_i &= \begin{cases}
 \label{fg:ex:synt:distr:with}
 \end{figure}
 
-\begin{figure}[h!]\center
-\includegraphics[width=1\textwidth]{figures/syn_T_lambda}
+\begin{figure}[h!]
+\rotatebox[origin=c]{90}{\parbox{7em}{\centering\scriptsize Пятый объект~~~\\~}}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{а}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_0.png}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{б}}
+\includegraphics[width=0.96\textwidth]{figures/syn_T_lambda_1.png}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{в}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_2.png}
+\end{subfigure}\\
+\rotatebox[origin=c]{90}{\parbox{7em}{\centering\scriptsize Девятый объект~~~\\~}}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{г}}
+\includegraphics[width=0.96\textwidth]{figures/syn_T_lambda_3.png}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{д}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_4.png}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{е}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_5.png}
+\end{subfigure}\\
+\rotatebox[origin=c]{90}{\parbox{7em}{\centering\scriptsize ~~~~~~Семнадцатый\\~~~~~~объект}}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{ж}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_6.png}
+\caption*{Первый Класс}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{з}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_7.png}
+\caption*{Второй Класс}
+\end{subfigure}%
+\begin{subfigure}{0.32\textwidth}
+\caption*{\textit{и}}
+\includegraphics[width=\textwidth]{figures/syn_T_lambda_8.png}
+\caption*{Третий Класс}
+\end{subfigure}%
 \caption{Рис. 7.}
 \label{fg:ex:synt:distr:lambda_T}
 \end{figure}
+}
 
-\newpage
-~\\
-\newpage
-~\\
 \newpage
 ~\\
 Рис.~\ref{fg:st:plate}. Вероятностная модель в формате плоских нотаций.
